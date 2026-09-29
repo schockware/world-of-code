@@ -47,7 +47,8 @@ An empty `unit` MUST be rejected with reason `unit.not-ucum`.
 ## Notes
 
 - **UCUM parsing has a design cost.** A nation without a UCUM library must supply one. That cost belongs to its design and is not a reason to weaken WX-UNIT-001.
-- **Vectors need external verification.** The accepted and rejected unit codes in `unit.json` were chosen from the UCUM case-sensitive forms, but have not yet been checked against a UCUM reference implementation. Do not move WX-UNIT-001 to `Accepted` until they have been.
+- **Vector verification.** The accepted and rejected unit codes in `unit.json` agree with two independent validators (`csharp-lib` and `golang-lib`), each written from the UCUM grammar against the unit list vendored in `../../../standards/ucum`. They have not been checked against an outside UCUM implementation, so keep WX-UNIT-001 at `Draft` until they are.
+- **Shared unit data.** The unit list is vendored in `domains/weather/standards/ucum` so every nation validates against the same data.
 
 ## Population assumptions
 

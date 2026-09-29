@@ -1,7 +1,7 @@
 {
   "area": "UNIT",
   "spec": "../unit.md",
-  "status": "Unit codes not yet verified against a UCUM reference implementation.",
+  "status": "Every accept and reject vector agrees with two independent validators (csharp-lib and golang-lib), each built from the UCUM essence unit list v2.2. Not yet checked against an outside UCUM implementation.",
   "vectors": [
     {
       "id": "accept-celsius",
