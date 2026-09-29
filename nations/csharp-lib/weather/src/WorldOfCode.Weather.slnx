@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WorldOfCode.Weather.Tests/WorldOfCode.Weather.Tests.csproj" />
+  <Project Path="WorldOfCode.Weather/WorldOfCode.Weather.csproj" />
+</Solution>

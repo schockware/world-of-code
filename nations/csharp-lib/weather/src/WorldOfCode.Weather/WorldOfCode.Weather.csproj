@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>WorldOfCode.Weather</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The shared UCUM unit list from the weather domain, read by UcumUnitValidator. -->
+    <EmbeddedResource Include="..\..\..\..\..\domains\weather\standards\ucum\ucum-essence.xml" LogicalName="ucum-essence.xml" />
+    <InternalsVisibleTo Include="WorldOfCode.Weather.Tests" />
+  </ItemGroup>
+
+</Project>
