@@ -9,6 +9,7 @@ See `README.MD` for the vision (nations, populations, domains, and the football 
 ```
 domains/{domain}/
   contracts/           machine-readable schemas and OpenAPI (peer of specs)
+  standards/           vendored data from external standards (for example UCUM), shared by every nation
   specs/{set}/         requirements and behaviors, technology-agnostic; the first set is `core`
   specs/{set}/conformance/  language-neutral test vectors (input/expected pairs)
 populations/{population}/
@@ -33,11 +34,11 @@ nations/{nation}/
 ## Nations
 
 - A nation is a language or framework with its own culture (opinions and ceremonies). If it carries its own culture, it is a separate nation, even when it shares a language with another.
-- Names are spelled out and say the language or framework and its shape: `csharp-lib`, `dotnet-cli`, `dotnet-mvc`, `aspnet-webapi`, `golang-lib`, `golang-webapi`, `react`, `vue`. Use `golang`, never `go`, in names.
+- Names are spelled out and say the language or framework and its shape: `csharp-lib`, `dotnet-cli`, `dotnet-mvc`, `aspnet-webapi`, `golang-lib`, `golang-webapi`, `rust-lib`, `typescript-lib`, `react`, `vue`. Use `golang`, never `go`, in names.
 - Population follows the nation. Do not reference populations in code that the framework already implies. Libraries have no population, and leaking one into a library is an anti-pattern. Supported populations are stated in READMEs.
 - Nation READMEs use these sections in order: Culture, Ceremonies and tooling, Populations, Domain translation, Border crossings, Pride, Rivals, Domains.
 - Technical sections are the truth. Pride and Rivals are affectionate banter that must stay grounded in real differences.
-- Ambiguous nation boundaries (TypeScript, Blazor) are decided as they come up and recorded in the root `README.MD`.
+- Ambiguous nation boundaries (Blazor, plain JavaScript) are decided as they come up and recorded in the root `README.MD`. TypeScript is already decided: it is its own nation.
 
 ## Authorship
 

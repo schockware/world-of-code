@@ -25,13 +25,15 @@ Domain contracts (`../domains/{domain}/contracts`) become structs and functions 
 
 ## Border crossings
 - Consumed by `golang-webapi`, which owns all population handling.
-- Cross-compare with `csharp-lib`: same domain and no population, but different culture. Error values instead of exceptions, small consumer-side interfaces instead of DI-shaped abstractions, and explicit constructors instead of a container.
+- Cross-compare with `csharp-lib`, `rust-lib` and `typescript-lib`: same domain and no population, but different culture. Error values instead of exceptions, small consumer-side interfaces instead of DI-shaped abstractions, and explicit constructors instead of a container.
 
 ## Pride
 "We shipped the whole playbook on one page. No inheritance, no container, no magic. `gofmt` ended every style argument before it started, and our binary needs nothing installed to run."
 
 ## Rivals
 - `csharp-lib`: "Three layers of interfaces to add two numbers. We wrote `if err != nil` and went home early."
+- `rust-lib`: "Three chapters of lifetimes to return a string. We returned it."
+- `typescript-lib`: "Your types are a rumor at runtime. Ours are real."
 - `react` and `vue`: they spend a whole match arguing about state. We just pass the value.
 
 ## Domains

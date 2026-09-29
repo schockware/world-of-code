@@ -29,4 +29,8 @@ A nation is defined by its culture: the opinions and ceremonies a language or fr
 - **Naming.** Nations are named by their culture at a glance, such as `csharp-lib`, `dotnet-cli`, `aspnet-webapi`, `react`. The name should tell you the language or framework and its shape.
 - **Population follows the nation.** See `nations/README.MD`. A nation's framework implies its population (or none), and we don't repeat that in code.
 - **Borders are contracts.** Nations interact through the contracts in `domains/{domain}/contracts`, not through each other's internals.
-- **These lines will move.** Ambiguous cases (TypeScript vs. JavaScript, Blazor, etc.) get decided as we hit them, and the decision is recorded here.
+- **These lines will move.** Ambiguous cases (Blazor, plain JavaScript, etc.) get decided as we hit them, and the decision is recorded here.
+
+### Decisions so far
+
+- **TypeScript is its own nation** (`typescript-lib`). Its types are erased at runtime, so validation is hand-written, and its strict configuration and `null` vs. `undefined` decisions shape how a domain is expressed. That is a different culture from a JavaScript-only or framework nation. The UI nations `react` and `vue` assume TypeScript and follow its rules for domain types.

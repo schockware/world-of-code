@@ -12,7 +12,7 @@ React with a functional, immutable-state culture.
 ## Ceremonies and tooling
 - Hooks and their rules (`eslint-plugin-react-hooks`), JSX transpilation (Babel/TypeScript/Vite).
 - Dependency arrays, memoization, and keys are the daily discipline.
-- TypeScript is expected. Whether it counts as a separate nation is undecided (see open questions).
+- TypeScript is expected. It is its own nation (`typescript-lib`), and this nation follows its rules for domain types.
 
 ## Populations
 `populations/humans`, assumed by the framework. Accessibility and i18n obligations (WCAG, BCP 47) still apply, and are met through the component layer.

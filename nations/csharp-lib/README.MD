@@ -23,13 +23,15 @@ Domain contracts (`../domains/{domain}/contracts`) become plain types and servic
 ## Border crossings
 - Consumed by `dotnet-mvc`, `aspnet-webapi` and `dotnet-cli`. The consuming nation owns all population handling.
 - Other nations reach this one only through a consumer, never directly.
-- Cross-compare with `golang-lib`: same role and no population, but different culture.
+- Cross-compare with `golang-lib`, `rust-lib` and `typescript-lib`: same role and no population, but different culture.
 
 ## Pride
 "Our types are so strong they finish your sentences. Nullable reference types, records, pattern matching: we catch the bug before you've had coffee. Twenty years of refinement, and the compiler is our teammate."
 
 ## Rivals
 - `golang-lib`: "Error values? You return an error and hope someone checks it. We throw, and the stack trace tells the whole story."
+- `rust-lib`: "Memory safety without a garbage collector, sure. Ours collects the garbage so you can think about weather."
+- `typescript-lib`: "Same architect. We kept the type checker at runtime."
 - `dotnet-mvc` and `aspnet-webapi`: family. Same language, but they got famous by wearing our work as a jersey.
 
 ## Domains
