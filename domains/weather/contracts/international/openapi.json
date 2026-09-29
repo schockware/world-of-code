@@ -1,0 +1,173 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "International Contract: OGC SensorThings Observations",
+    "version": "0.1.0",
+    "description": "Derived only from OGC SensorThings API Part 1: Sensing v1.1 (OGC 18-088), https://docs.ogc.org/is/18-088/18-088.html, sections 8.2.5 (Datastream), 8.2.7 (ObservedProperty), 8.2.8 (Observation) and 8.2.9 (FeatureOfInterest) as published. SensorThings defines its own URL scheme and OData query options; only the entity shapes and the observation-listing path are expressed here."
+  },
+  "paths": {
+    "/Datastreams({datastreamId})/Observations": {
+      "get": {
+        "operationId": "listDatastreamObservations",
+        "summary": "List the Observations belonging to a Datastream.",
+        "parameters": [
+          {
+            "name": "datastreamId",
+            "in": "path",
+            "required": true,
+            "description": "The @iot.id of the Datastream.",
+            "schema": { "$ref": "#/components/schemas/EntityId" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A collection of Observation entities.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ObservationCollection" }
+              }
+            }
+          },
+          "404": { "description": "No such Datastream." }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EntityId": {
+        "type": ["integer", "string"],
+        "description": "@iot.id: a service-generated identifier. The standard examples use integers; services may use strings."
+      },
+      "ObservationCollection": {
+        "type": "object",
+        "required": ["value"],
+        "properties": {
+          "@iot.count": { "type": "integer" },
+          "@iot.nextLink": { "type": "string", "format": "uri" },
+          "value": { "type": "array", "items": { "$ref": "#/components/schemas/Observation" } }
+        }
+      },
+      "Observation": {
+        "type": "object",
+        "required": ["phenomenonTime", "result", "resultTime"],
+        "properties": {
+          "@iot.id": { "$ref": "#/components/schemas/EntityId" },
+          "@iot.selfLink": { "type": "string", "format": "uri" },
+          "phenomenonTime": {
+            "type": "string",
+            "description": "The time instant or period of when the Observation happens. ISO 8601 time string or time interval string (e.g. 2010-12-23T10:20:00.00-07:00 or 2010-12-23T10:20:00.00-07:00/2010-12-23T12:20:00.00-07:00)."
+          },
+          "result": {
+            "description": "The estimated value of an ObservedProperty from the Observation. Its data type depends on the observationType of the Datastream (Any)."
+          },
+          "resultTime": {
+            "type": ["string", "null"],
+            "description": "The time the result of the Observation was generated (ISO 8601 time string). Null when the service could not assign one."
+          },
+          "resultQuality": {
+            "type": "array",
+            "items": {},
+            "description": "Describes the quality of the result. Zero-to-many DQ_Element (ISO 19157); the standard does not fix a JSON shape."
+          },
+          "validTime": {
+            "type": "string",
+            "description": "The time period during which the result may be used (ISO 8601 time interval string)."
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Key-value pairs showing the environmental conditions during measurement.",
+            "additionalProperties": true
+          }
+        }
+      },
+      "Thing": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "@iot.id": { "$ref": "#/components/schemas/EntityId" },
+          "@iot.selfLink": { "type": "string", "format": "uri" },
+          "name": { "type": "string", "description": "A label for the Thing, commonly a descriptive name." },
+          "description": { "type": "string", "description": "A short description of the Thing." },
+          "properties": { "type": "object", "additionalProperties": true }
+        }
+      },
+      "Datastream": {
+        "type": "object",
+        "required": ["name", "description", "unitOfMeasurement", "observationType"],
+        "properties": {
+          "@iot.id": { "$ref": "#/components/schemas/EntityId" },
+          "@iot.selfLink": { "type": "string", "format": "uri" },
+          "name": { "type": "string", "description": "A label for the Datastream, commonly a descriptive name." },
+          "description": { "type": "string", "description": "The description of the Datastream." },
+          "unitOfMeasurement": { "$ref": "#/components/schemas/UnitOfMeasurement" },
+          "observationType": {
+            "type": "string",
+            "format": "uri",
+            "description": "The type of Observation (with unique result type), used by the service to encode observations (a ValueCode).",
+            "examples": [
+              "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CategoryObservation",
+              "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_CountObservation",
+              "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Measurement",
+              "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_Observation",
+              "http://www.opengis.net/def/observationType/OGC-OM/2.0/OM_TruthObservation"
+            ]
+          },
+          "properties": { "type": "object", "additionalProperties": true },
+          "observedArea": {
+            "type": "object",
+            "description": "Bounding box of all FeaturesOfInterest of this Datastream's Observations (GeoJSON Polygon)."
+          },
+          "phenomenonTime": {
+            "type": "string",
+            "description": "Temporal interval of the phenomenon times of all observations in this Datastream (ISO 8601 time interval)."
+          },
+          "resultTime": {
+            "type": "string",
+            "description": "Temporal interval of the result times of all observations in this Datastream (ISO 8601 time interval)."
+          }
+        }
+      },
+      "UnitOfMeasurement": {
+        "type": "object",
+        "required": ["name", "symbol", "definition"],
+        "properties": {
+          "name": { "type": ["string", "null"], "description": "Full name of the unit of measurement." },
+          "symbol": { "type": ["string", "null"], "description": "Textual form of the unit symbol." },
+          "definition": { "type": ["string", "null"], "description": "URI defining the unit of measurement." }
+        },
+        "description": "Values SHOULD follow UCUM. When the Datastream has no unit (e.g. OM_TruthObservation), all three properties SHALL be null."
+      },
+      "ObservedProperty": {
+        "type": "object",
+        "required": ["name", "definition", "description"],
+        "properties": {
+          "@iot.id": { "$ref": "#/components/schemas/EntityId" },
+          "name": { "type": "string", "description": "A label for the ObservedProperty, commonly a descriptive name." },
+          "definition": {
+            "type": "string",
+            "format": "uri",
+            "description": "URI of the ObservedProperty. Dereferencing SHOULD return its definition."
+          },
+          "description": { "type": "string" },
+          "properties": { "type": "object", "additionalProperties": true }
+        }
+      },
+      "FeatureOfInterest": {
+        "type": "object",
+        "required": ["name", "description", "encodingType", "feature"],
+        "properties": {
+          "@iot.id": { "$ref": "#/components/schemas/EntityId" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "encodingType": {
+            "type": "string",
+            "description": "Encoding type of the feature property (a ValueCode, Table 7 of the standard)."
+          },
+          "feature": { "description": "Detailed description of the feature; its data type is defined by encodingType." },
+          "properties": { "type": "object", "additionalProperties": true }
+        }
+      }
+    }
+  }
+}

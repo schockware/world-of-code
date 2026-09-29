@@ -1,0 +1,360 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "US Contract: NWS API Observations",
+    "version": "0.1.0",
+    "description": "Derived only from the weather.gov API OpenAPI document (info.version 3.11.0, openapi 3.1.2) https://api.weather.gov/openapi.json. Schemas are copied from that document; omissions are listed in the notes file."
+  },
+  "paths": {
+    "/stations/{stationId}/observations/latest": {
+      "get": {
+        "operationId": "station_observation_latest",
+        "description": "Returns the latest observation for a station",
+        "parameters": [
+          {
+            "name": "require_qc",
+            "in": "query",
+            "description": "Require QC",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An observation record.",
+            "content": {
+              "application/geo+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Observation"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "An error response.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "stationId",
+          "in": "path",
+          "description": "Observation station ID",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "Observation": {
+        "type": "object",
+        "properties": {
+          "elevation": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "station": {
+            "type": "string",
+            "format": "uri"
+          },
+          "stationId": {
+            "type": "string"
+          },
+          "stationName": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "rawMessage": {
+            "type": "string"
+          },
+          "textDescription": {
+            "type": "string"
+          },
+          "presentWeather": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetarPhenomenon"
+            }
+          },
+          "temperature": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "dewpoint": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "windDirection": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "windSpeed": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "windGust": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "barometricPressure": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "seaLevelPressure": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "maxTemperatureLast24Hours": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "minTemperatureLast24Hours": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "precipitationLastHour": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "precipitationLast3Hours": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "precipitationLast6Hours": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "relativeHumidity": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "windChill": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "heatIndex": {
+            "$ref": "#/components/schemas/QuantitativeValue"
+          },
+          "cloudLayers": {
+            "type": [
+              "array",
+              "null"
+            ],
+            "items": {
+              "required": [
+                "base",
+                "amount"
+              ],
+              "type": "object",
+              "properties": {
+                "base": {
+                  "$ref": "#/components/schemas/QuantitativeValue"
+                },
+                "amount": {
+                  "$ref": "#/components/schemas/MetarSkyCoverage"
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Observation record from an NWS observation station (subset of NWS API schema 'Observation', API 3.11.0)."
+      },
+      "QuantitativeValue": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "description": "A measured value"
+          },
+          "maxValue": {
+            "type": "number",
+            "description": "The maximum value of a range of measured values"
+          },
+          "minValue": {
+            "type": "number",
+            "description": "The minimum value of a range of measured values"
+          },
+          "unitCode": {
+            "$ref": "#/components/schemas/UnitOfMeasure"
+          },
+          "qualityControl": {
+            "enum": [
+              "Z",
+              "C",
+              "S",
+              "V",
+              "X",
+              "Q",
+              "G",
+              "B",
+              "T"
+            ],
+            "type": "string",
+            "description": "For values in observation records, the quality control flag from the MADIS system. The definitions of these flags can be found at https://madis.ncep.noaa.gov/madis_sfc_qc_notes.shtml\n"
+          }
+        },
+        "description": "A structured value representing a measurement and its unit of measure. This object is a slightly modified version of the schema.org definition at https://schema.org/QuantitativeValue\n",
+        "additionalProperties": false
+      },
+      "UnitOfMeasure": {
+        "pattern": "^((wmo|uc|wmoUnit|nwsUnit):)?.*$",
+        "type": "string",
+        "description": "A string denoting a unit of measure, expressed in the format \"{unit}\" or \"{namespace}:{unit}\".\nUnits with the namespace \"wmo\" or \"wmoUnit\" are defined in the World Meteorological Organization Codes Registry at http://codes.wmo.int/common/unit and should be canonically resolvable to http://codes.wmo.int/common/unit/{unit}.\nUnits with the namespace \"nwsUnit\" are currently custom and do not align to any standard.\nUnits with no namespace or the namespace \"uc\" are compliant with the Unified Code for Units of Measure syntax defined at https://unitsofmeasure.org/. This also aligns with recent versions of the Geographic Markup Language (GML) standard, the IWXXM standard, and OGC Observations and Measurements v2.0 (ISO/DIS 19156).\nNamespaced units are considered deprecated. We will be aligning API to use the same standards as GML/IWXXM in the future.\n"
+      },
+      "MetarPhenomenon": {
+        "required": [
+          "intensity",
+          "modifier",
+          "weather",
+          "rawString"
+        ],
+        "type": "object",
+        "properties": {
+          "intensity": {
+            "enum": [
+              "light",
+              "heavy"
+            ],
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "modifier": {
+            "enum": [
+              "patches",
+              "blowing",
+              "low_drifting",
+              "freezing",
+              "shallow",
+              "partial",
+              "showers"
+            ],
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "weather": {
+            "enum": [
+              "fog_mist",
+              "dust_storm",
+              "dust",
+              "drizzle",
+              "funnel_cloud",
+              "fog",
+              "smoke",
+              "hail",
+              "snow_pellets",
+              "haze",
+              "ice_crystals",
+              "ice_pellets",
+              "dust_whirls",
+              "spray",
+              "rain",
+              "sand",
+              "snow_grains",
+              "snow",
+              "squalls",
+              "sand_storm",
+              "thunderstorms",
+              "unknown",
+              "volcanic_ash"
+            ],
+            "type": "string"
+          },
+          "rawString": {
+            "type": "string"
+          },
+          "inVicinity": {
+            "type": "boolean"
+          }
+        },
+        "description": "An object representing a decoded METAR phenomenon string.",
+        "additionalProperties": false
+      },
+      "MetarSkyCoverage": {
+        "enum": [
+          "OVC",
+          "BKN",
+          "SCT",
+          "FEW",
+          "SKC",
+          "CLR",
+          "VV"
+        ],
+        "type": "string"
+      },
+      "ProblemDetail": {
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "instance",
+          "correlationId"
+        ],
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI reference (RFC 3986) that identifies the problem type. This is only an identifier and is not necessarily a resolvable URL.\n",
+            "format": "uri",
+            "default": "about:blank",
+            "examples": [
+              "urn:noaa:nws:api:UnexpectedProblem"
+            ]
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem type.",
+            "examples": [
+              "Unexpected Problem"
+            ]
+          },
+          "status": {
+            "maximum": 999,
+            "minimum": 100,
+            "type": "number",
+            "description": "The HTTP status code (RFC 7231, Section 6) generated by the origin server for this occurrence of the problem.\n",
+            "examples": [
+              500
+            ]
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human-readable explanation specific to this occurrence of the problem.",
+            "examples": [
+              "An unexpected problem has occurred."
+            ]
+          },
+          "instance": {
+            "type": "string",
+            "description": "A URI reference (RFC 3986) that identifies the specific occurrence of the problem. This is only an identifier and is not necessarily a resolvable URL.\n",
+            "format": "uri",
+            "examples": [
+              "urn:noaa:nws:api:request:493c3a1d-f87e-407f-ae2c-24483f5aab63"
+            ]
+          },
+          "correlationId": {
+            "type": "string",
+            "description": "A unique identifier for the request, used for NWS debugging purposes. Please include this identifier with any correspondence to help us investigate your issue.\n",
+            "examples": [
+              "493c3a1d-f87e-407f-ae2c-24483f5aab63"
+            ]
+          }
+        },
+        "description": "Detail about an error. This document conforms to RFC 7807 (Problem Details for HTTP APIs).",
+        "additionalProperties": true
+      }
+    }
+  }
+}

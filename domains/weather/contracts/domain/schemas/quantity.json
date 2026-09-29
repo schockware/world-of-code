@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/weather/domain/schemas/quantity.json",
+  "title": "Quantity",
+  "description": "A measured value and its unit of measure.",
+  "type": "object",
+  "required": ["value", "unit"],
+  "additionalProperties": false,
+  "properties": {
+    "value": {
+      "type": ["number", "null"],
+      "description": "The measured value. Null when the element was observed but no value is available."
+    },
+    "unit": {
+      "type": "string",
+      "pattern": "^(?!(wmo|wmoUnit|nwsUnit|uc):).+$",
+      "description": "A UCUM code without a namespace prefix, e.g. Cel, m/s, hPa, [degF]."
+    }
+  }
+}

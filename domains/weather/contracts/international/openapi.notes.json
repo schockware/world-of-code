@@ -1,0 +1,29 @@
+{
+  "contract": "openapi.json",
+  "notes": {
+    "#/components/schemas/Observation": {
+      "source": "OGC 18-088 v1.1 section 8.2.8, Table 18.",
+      "comment": "phenomenonTime, result and resultTime are mandatory in the standard, but a client may omit them on POST and the service fills them in (resultTime may become null). This is why resultTime allows null.",
+      "standards": [{ "name": "OGC SensorThings API Part 1 v1.1", "url": "https://docs.ogc.org/is/18-088/18-088.html" }]
+    },
+    "#/components/schemas/Observation/properties/resultQuality": {
+      "comment": "The standard says DQ_Element (ISO 19157) with multiplicity zero-to-many and gives no JSON shape, so items is left open."
+    },
+    "#/components/schemas/Datastream": {
+      "source": "Table 10 (properties) and Table 11 (relations). Navigation links (Thing@iot.navigationLink and similar) are not modelled."
+    },
+    "#/components/schemas/Datastream/properties/observationType": {
+      "comment": "Table 12 lists only 'some' value codes, so the schema does not restrict the value to an enum."
+    },
+    "#/components/schemas/UnitOfMeasurement": {
+      "source": "Datastream.unitOfMeasurement, Table 10.",
+      "comment": "SHOULD follow UCUM, not SHALL. The example uses definition http://unitsofmeasure.org/ucum.html#para-30 with symbol and name for degree Celsius."
+    },
+    "#/components/schemas/Thing": { "source": "Table 3." },
+    "#/components/schemas/ObservedProperty": { "source": "Table 16." },
+    "#/components/schemas/FeatureOfInterest": { "source": "Table 20." },
+    "#/paths/~1Datastreams({datastreamId})~1Observations/get": {
+      "comment": "SensorThings is defined by URL patterns plus OData query options ($filter, $expand, $top and so on), not by an OpenAPI document. Only this one navigation path is expressed here."
+    }
+  }
+}

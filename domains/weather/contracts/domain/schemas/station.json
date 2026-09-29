@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/weather/domain/schemas/station.json",
+  "title": "Station",
+  "description": "The observing station (or equivalent sensing thing) that produced an observation.",
+  "type": "object",
+  "required": ["id"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Station identifier, unique within the providing service."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable station name."
+    }
+  }
+}

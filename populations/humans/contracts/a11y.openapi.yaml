@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: Humans a11y Contract
+  version: 0.1.0
+  description: |
+    Accessibility needs and conformance targets, using the standards as written.
+
+    - WCAG 2.0 / 2.1 / 2.2 (W3C Recommendations), see standards/wcag/
+    - WAI-ARIA 1.2, see standards/wcag/wai-aria-1.2.html
+    - CSS Media Queries Level 5 user preference features (`prefers-*`, `forced-colors`)
+
+    Two separate questions live here:
+    1. What the human needs (`AccessibilityPreferences`). Declared by the human, never inferred.
+    2. What the software promises (`WcagConformanceTarget`). Declared by the service.
+paths: {}
+components:
+  schemas:
+    WcagVersion:
+      type: string
+      enum: ['2.0', '2.1', '2.2']
+    WcagLevel:
+      type: string
+      description: Conformance level. AA is the common legal and procurement baseline.
+      enum: [A, AA, AAA]
+    WcagConformanceTarget:
+      type: object
+      description: What a service claims to conform to. Success criteria come from wcag-catalog.openapi.yaml.
+      required: [version, level]
+      properties:
+        version: { $ref: '#/components/schemas/WcagVersion' }
+        level:   { $ref: '#/components/schemas/WcagLevel' }
+        exceptions:
+          type: array
+          description: Criteria not yet met, so the claim stays honest.
+          items: { $ref: 'wcag-catalog.openapi.yaml#/components/schemas/WcagSuccessCriterionId' }
+    PreferenceValue:
+      type: string
+      description: Mirrors the CSS media feature values.
+      enum: [no-preference, reduce, more, less, custom]
+    ColorScheme:
+      type: string
+      enum: [light, dark]
+    AssistiveTechnology:
+      type: string
+      enum: [screen-reader, screen-magnifier, switch-control, voice-control, eye-tracking, braille-display, captions, other]
+    InputModality:
+      type: string
+      enum: [touch, mouse, keyboard, voice, stylus, gamepad, switch, gaze, gesture]
+    PresentationNeeds:
+      type: object
+      description: Visual presentation. Relates to WCAG principle 1 (Perceivable).
+      properties:
+        colorScheme:    { $ref: '#/components/schemas/ColorScheme' }
+        contrast:       { $ref: '#/components/schemas/PreferenceValue' }
+        forcedColors:   { type: boolean, description: "CSS `forced-colors: active`" }
+        reducedMotion:  { $ref: '#/components/schemas/PreferenceValue' }
+        reducedData:    { $ref: '#/components/schemas/PreferenceValue' }
+        reducedTransparency: { $ref: '#/components/schemas/PreferenceValue' }
+        textScale:
+          type: number
+          description: Multiplier on the default text size. WCAG 1.4.4 requires 2.0 to work.
+          minimum: 0.5
+          maximum: 5
+        colorVisionDeficiency:
+          type: string
+          enum: [protanopia, deuteranopia, tritanopia, achromatopsia, other]
+    MediaNeeds:
+      type: object
+      description: Alternatives for audio and visual content.
+      properties:
+        captions:          { type: boolean }
+        audioDescription:  { type: boolean }
+        signLanguage:      { $ref: 'i18n.openapi.yaml#/components/schemas/LanguageTag' }
+        transcripts:       { type: boolean }
+    InteractionNeeds:
+      type: object
+      description: How the human operates the software. Relates to WCAG principle 2 (Operable).
+      properties:
+        inputModalities:
+          type: array
+          items: { $ref: '#/components/schemas/InputModality' }
+        assistiveTechnologies:
+          type: array
+          items: { $ref: '#/components/schemas/AssistiveTechnology' }
+        extendedTiming:
+          type: boolean
+          description: Needs more time or no time limits (WCAG 2.2.x).
+        largeTargets:
+          type: boolean
+          description: Needs larger pointer targets (WCAG 2.5.5, 2.5.8).
+    ComprehensionNeeds:
+      type: object
+      description: Relates to WCAG principle 3 (Understandable).
+      properties:
+        plainLanguage:   { type: boolean }
+        simpleLayout:    { type: boolean }
+        fewerSteps:      { type: boolean, description: Prefer shorter forms and flows. }
+        readingSupport:  { type: boolean, description: "Text-to-speech, dyslexia-friendly fonts, and similar." }
+    AccessibilityPreferences:
+      type: object
+      description: |
+        Declared by the human, opt-in, and never required to use a feature.
+        Every field is optional, and absence means no declared need, not "no need".
+      properties:
+        presentation:  { $ref: '#/components/schemas/PresentationNeeds' }
+        media:         { $ref: '#/components/schemas/MediaNeeds' }
+        interaction:   { $ref: '#/components/schemas/InteractionNeeds' }
+        comprehension: { $ref: '#/components/schemas/ComprehensionNeeds' }

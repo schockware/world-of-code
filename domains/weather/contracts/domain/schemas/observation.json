@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/weather/domain/schemas/observation.json",
+  "title": "Observation",
+  "description": "A set of surface weather elements observed at one station at one instant.",
+  "type": "object",
+  "required": ["station", "observedAt"],
+  "additionalProperties": false,
+  "properties": {
+    "station": { "$ref": "station.json" },
+    "observedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The instant the observation applies to (RFC 3339)."
+    },
+    "temperature": { "$ref": "quantity.json" },
+    "dewpoint": { "$ref": "quantity.json" },
+    "relativeHumidity": { "$ref": "quantity.json" },
+    "windDirection": { "$ref": "quantity.json" },
+    "windSpeed": { "$ref": "quantity.json" },
+    "windGust": { "$ref": "quantity.json" },
+    "barometricPressure": { "$ref": "quantity.json" },
+    "seaLevelPressure": { "$ref": "quantity.json" },
+    "visibility": { "$ref": "quantity.json" }
+  }
+}

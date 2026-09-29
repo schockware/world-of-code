@@ -1,0 +1,128 @@
+{
+  "area": "UNIT",
+  "spec": "../unit.md",
+  "status": "Unit codes not yet verified against a UCUM reference implementation.",
+  "vectors": [
+    {
+      "id": "accept-celsius",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "Cel" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "accept-metres-per-second",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 4, "unit": "m/s" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "accept-prefixed-pascal",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 1013.25, "unit": "hPa" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "accept-bracketed-fahrenheit",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 54.5, "unit": "[degF]" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "accept-percent",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 63, "unit": "%" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "accept-degree-of-angle",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 270, "unit": "deg" } },
+      "expect": { "outcome": "ok" }
+    },
+    {
+      "id": "reject-not-ucum-degc",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "degC" } },
+      "expect": { "outcome": "rejected", "reason": "unit.not-ucum" }
+    },
+    {
+      "id": "reject-not-ucum-word",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "celsius" } },
+      "expect": { "outcome": "rejected", "reason": "unit.not-ucum" }
+    },
+    {
+      "id": "reject-not-ucum-wrong-case",
+      "requirements": ["WX-UNIT-001"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "cel" } },
+      "expect": { "outcome": "rejected", "reason": "unit.not-ucum" }
+    },
+    {
+      "id": "reject-not-ucum-empty",
+      "requirements": ["WX-UNIT-001", "WX-UNIT-004"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "" } },
+      "expect": { "outcome": "rejected", "reason": "unit.not-ucum" }
+    },
+    {
+      "id": "preserve-celsius",
+      "requirements": ["WX-UNIT-002"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 12.5, "unit": "Cel" } },
+      "expect": { "outcome": "ok", "result": { "value": 12.5, "unit": "Cel" } }
+    },
+    {
+      "id": "preserve-fahrenheit-not-converted",
+      "requirements": ["WX-UNIT-002"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 54.5, "unit": "[degF]" } },
+      "expect": { "outcome": "ok", "result": { "value": 54.5, "unit": "[degF]" } }
+    },
+    {
+      "id": "preserve-prefix-not-normalized",
+      "requirements": ["WX-UNIT-002"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 101325, "unit": "Pa" } },
+      "expect": { "outcome": "ok", "result": { "value": 101325, "unit": "Pa" } },
+      "note": "Pa MUST NOT become hPa or kPa."
+    },
+    {
+      "id": "reject-namespaced-wmo-unit",
+      "requirements": ["WX-UNIT-003"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "wmoUnit:degC" } },
+      "expect": { "outcome": "rejected", "reason": "unit.namespaced" },
+      "note": "Also not valid UCUM. WX-UNIT-003 sets the reason."
+    },
+    {
+      "id": "reject-namespaced-nws-unit",
+      "requirements": ["WX-UNIT-003"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 4, "unit": "nwsUnit:m_s-1" } },
+      "expect": { "outcome": "rejected", "reason": "unit.namespaced" }
+    },
+    {
+      "id": "reject-namespaced-wmo",
+      "requirements": ["WX-UNIT-003"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "wmo:Cel" } },
+      "expect": { "outcome": "rejected", "reason": "unit.namespaced" }
+    },
+    {
+      "id": "reject-namespaced-uc",
+      "requirements": ["WX-UNIT-003"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "uc:Cel" } },
+      "expect": { "outcome": "rejected", "reason": "unit.namespaced" }
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "area": "QTY",
+  "spec": "../qty.md",
+  "vectors": [
+    {
+      "id": "state-not-reported",
+      "requirements": ["WX-QTY-001", "WX-QTY-002"],
+      "operation": "classify",
+      "input": {
+        "observation": { "station": { "id": "KSEA" }, "observedAt": "2026-01-01T00:00:00Z" },
+        "element": "temperature"
+      },
+      "expect": { "outcome": "ok", "state": "not-reported" }
+    },
+    {
+      "id": "state-reported-without-value",
+      "requirements": ["WX-QTY-001", "WX-QTY-003"],
+      "operation": "classify",
+      "input": {
+        "observation": { "station": { "id": "KSEA" }, "observedAt": "2026-01-01T00:00:00Z", "temperature": { "value": null, "unit": "Cel" } },
+        "element": "temperature"
+      },
+      "expect": { "outcome": "ok", "state": "reported-without-value" }
+    },
+    {
+      "id": "state-reported",
+      "requirements": ["WX-QTY-001", "WX-QTY-004"],
+      "operation": "classify",
+      "input": {
+        "observation": { "station": { "id": "KSEA" }, "observedAt": "2026-01-01T00:00:00Z", "temperature": { "value": 12.5, "unit": "Cel" } },
+        "element": "temperature"
+      },
+      "expect": { "outcome": "ok", "state": "reported" }
+    },
+    {
+      "id": "state-zero-is-reported",
+      "requirements": ["WX-QTY-004", "WX-QTY-005"],
+      "operation": "classify",
+      "input": {
+        "observation": { "station": { "id": "KSEA" }, "observedAt": "2026-01-01T00:00:00Z", "temperature": { "value": 0, "unit": "Cel" } },
+        "element": "temperature"
+      },
+      "expect": { "outcome": "ok", "state": "reported" }
+    },
+    {
+      "id": "state-negative-is-reported",
+      "requirements": ["WX-QTY-004"],
+      "operation": "classify",
+      "input": {
+        "observation": { "station": { "id": "KSEA" }, "observedAt": "2026-01-01T00:00:00Z", "temperature": { "value": -40, "unit": "Cel" } },
+        "element": "temperature"
+      },
+      "expect": { "outcome": "ok", "state": "reported" }
+    },
+    {
+      "id": "roundtrip-null-keeps-unit",
+      "requirements": ["WX-QTY-003"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": null, "unit": "Cel" } },
+      "expect": { "outcome": "ok", "result": { "value": null, "unit": "Cel" } }
+    },
+    {
+      "id": "roundtrip-keeps-states-distinct",
+      "requirements": ["WX-QTY-005"],
+      "operation": "roundtrip",
+      "input": {
+        "observation": {
+          "station": { "id": "KSEA" },
+          "observedAt": "2026-01-01T00:00:00Z",
+          "temperature": { "value": null, "unit": "Cel" },
+          "windSpeed": { "value": 0, "unit": "m/s" }
+        }
+      },
+      "expect": {
+        "outcome": "ok",
+        "result": {
+          "station": { "id": "KSEA" },
+          "observedAt": "2026-01-01T00:00:00Z",
+          "temperature": { "value": null, "unit": "Cel" },
+          "windSpeed": { "value": 0, "unit": "m/s" }
+        }
+      },
+      "note": "dewpoint and the other elements are omitted and MUST stay omitted. temperature MUST stay null, and windSpeed MUST stay zero."
+    },
+    {
+      "id": "roundtrip-value-two-decimals",
+      "requirements": ["WX-QTY-006"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 21.15, "unit": "Cel" } },
+      "expect": { "outcome": "ok", "result": { "value": 21.15, "unit": "Cel" } }
+    },
+    {
+      "id": "roundtrip-value-many-decimals",
+      "requirements": ["WX-QTY-006"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 1013.2512345, "unit": "hPa" } },
+      "expect": { "outcome": "ok", "result": { "value": 1013.2512345, "unit": "hPa" } }
+    },
+    {
+      "id": "roundtrip-value-large-integer",
+      "requirements": ["WX-QTY-006"],
+      "operation": "roundtrip",
+      "input": { "quantity": { "value": 123456789, "unit": "m" } },
+      "expect": { "outcome": "ok", "result": { "value": 123456789, "unit": "m" } }
+    },
+    {
+      "id": "reject-value-missing",
+      "requirements": ["WX-QTY-007"],
+      "operation": "validate",
+      "input": { "quantity": { "unit": "Cel" } },
+      "expect": { "outcome": "rejected", "reason": "qty.value-missing" }
+    },
+    {
+      "id": "reject-unit-missing",
+      "requirements": ["WX-QTY-008"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5 } },
+      "expect": { "outcome": "rejected", "reason": "qty.unit-missing" }
+    },
+    {
+      "id": "reject-unit-missing-with-null-value",
+      "requirements": ["WX-QTY-008"],
+      "operation": "validate",
+      "input": { "quantity": { "value": null } },
+      "expect": { "outcome": "rejected", "reason": "qty.unit-missing" }
+    },
+    {
+      "id": "reject-value-string",
+      "requirements": ["WX-QTY-009"],
+      "operation": "validate",
+      "input": { "quantity": { "value": "12.5", "unit": "Cel" } },
+      "expect": { "outcome": "rejected", "reason": "qty.value-not-numeric" }
+    },
+    {
+      "id": "reject-value-boolean",
+      "requirements": ["WX-QTY-009"],
+      "operation": "validate",
+      "input": { "quantity": { "value": false, "unit": "Cel" } },
+      "expect": { "outcome": "rejected", "reason": "qty.value-not-numeric" }
+    },
+    {
+      "id": "reject-unknown-member",
+      "requirements": ["WX-QTY-010"],
+      "operation": "validate",
+      "input": { "quantity": { "value": 12.5, "unit": "Cel", "quality": "V" } },
+      "expect": { "outcome": "rejected", "reason": "qty.unknown-member" }
+    }
+  ]
+}

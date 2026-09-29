@@ -1,0 +1,19 @@
+{
+  "contract": "quantity.json",
+  "notes": {
+    "#/properties/value": {
+      "maps": {
+        "us": "QuantitativeValue.value (number or null)",
+        "international": "Observation.result, when the Datastream observationType is OM_Measurement"
+      }
+    },
+    "#/properties/unit": {
+      "maps": {
+        "us": "QuantitativeValue.unitCode, only when it has no namespace or the uc: namespace",
+        "international": "Datastream.unitOfMeasurement.symbol, when it is a valid UCUM code"
+      },
+      "rationale": "UCUM is the only unit system both sources accept. A Quantity from either source can be converted only if its unit is already UCUM; see README for the cases that are not.",
+      "standards": [{ "name": "UCUM", "url": "https://ucum.org/ucum" }]
+    }
+  }
+}

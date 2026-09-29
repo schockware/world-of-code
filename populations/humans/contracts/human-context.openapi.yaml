@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: Human Context
+  version: 0.1.0
+  description: |
+    Describes the human interacting with our software. Layers are independent axes.
+    Every property is optional, and a client that sends nothing still works.
+
+    - Language and formatting: i18n.openapi.yaml
+    - Accessibility: a11y.openapi.yaml
+    - Geolocation and client: defined here
+paths: {}
+components:
+  parameters:
+    AcceptLanguage:
+      $ref: 'i18n.openapi.yaml#/components/parameters/AcceptLanguage'
+    TimeZone:
+      $ref: 'i18n.openapi.yaml#/components/parameters/TimeZone'
+  schemas:
+    HumanContext:
+      type: object
+      properties:
+        language:    { $ref: 'i18n.openapi.yaml#/components/schemas/Language' }
+        formatting:  { $ref: 'i18n.openapi.yaml#/components/schemas/Formatting' }
+        geolocation: { $ref: '#/components/schemas/Geolocation' }
+        client:      { $ref: '#/components/schemas/Client' }
+        ux:          { $ref: '#/components/schemas/Ux' }
+    Geolocation:
+      type: object
+      description: |
+        Country is usually enough. Precise position is opt-in only.
+        Region is not language, so never infer one from the other.
+      properties:
+        country: { $ref: 'i18n.openapi.yaml#/components/schemas/CountryCode' }
+        region:
+          type: string
+          description: ISO 3166-2 subdivision code, for example `US-CA`.
+          pattern: '^[A-Z]{2}-[A-Z0-9]{1,3}$'
+        precise:
+          type: object
+          description: Opt-in only. Never collected by default.
+          required: [latitude, longitude]
+          properties:
+            latitude:  { type: number, minimum: -90, maximum: 90 }
+            longitude: { type: number, minimum: -180, maximum: 180 }
+            accuracyMeters: { type: number, minimum: 0 }
+    Platform:
+      type: string
+      enum: [web, desktop, mobile, cli, api, agent]
+    FormFactor:
+      type: string
+      description: Aligned with the `Sec-CH-UA-Form-Factors` Client Hint.
+      enum: [phone, tablet, desktop, watch, tv, car, xr, kiosk, smart-speaker]
+    Client:
+      type: object
+      description: The software the human is using. Prefer Client Hints over User-Agent parsing.
+      properties:
+        platform:    { $ref: '#/components/schemas/Platform' }
+        userAgent:   { type: string, description: Raw `User-Agent` string when available. }
+        os:          { type: string }
+        osVersion:   { type: string }
+        browser:     { type: string }
+        browserVersion: { type: string }
+        formFactor:  { $ref: '#/components/schemas/FormFactor' }
+        viewport:
+          type: object
+          properties:
+            width:  { type: integer, minimum: 0 }
+            height: { type: integer, minimum: 0 }
+            pixelRatio: { type: number, minimum: 0 }
+        inputModalities:
+          type: array
+          items: { $ref: 'a11y.openapi.yaml#/components/schemas/InputModality' }
+        network:
+          type: object
+          properties:
+            effectiveType: { type: string, enum: [slow-2g, 2g, 3g, 4g], description: "Network Information API." }
+            saveData:      { type: boolean }
+            offline:       { type: boolean }
+    Ux:
+      type: object
+      description: |
+        Adapts the experience, not just the formatting. Sensitive, so it is
+        declared rather than inferred, opt-in, coarse, and never a gate on any feature.
+      properties:
+        accessibility: { $ref: 'a11y.openapi.yaml#/components/schemas/AccessibilityPreferences' }
+        demographics:  { $ref: '#/components/schemas/Demographics' }
+    AgeBand:
+      type: string
+      description: Coarse on purpose. Never store a birthdate for this.
+      enum: [under-13, 13-17, 18-64, 65-plus]
+    Demographics:
+      type: object
+      description: Placeholder for phase 2. Keep minimal, coarse, and declared.
+      properties:
+        ageBand: { $ref: '#/components/schemas/AgeBand' }
+        readingLevel:
+          type: string
+          enum: [basic, general, advanced]
+        domainExpertise:
+          type: string
+          enum: [novice, intermediate, expert]

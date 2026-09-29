@@ -1,0 +1,36 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Weather Domain Contract",
+    "version": "0.2.0",
+    "description": "The common subset of the US (NWS API) and international (OGC SensorThings) observation contracts. See README.md for what was left out and why."
+  },
+  "paths": {
+    "/stations/{stationId}/observations/latest": {
+      "get": {
+        "operationId": "getLatestObservation",
+        "summary": "Get the latest observation for a station.",
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "required": true,
+            "description": "Station identifier.",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The latest observation.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "schemas/observation.json" }
+              }
+            }
+          },
+          "404": { "description": "No such station, or no observation available." }
+        }
+      }
+    }
+  }
+}

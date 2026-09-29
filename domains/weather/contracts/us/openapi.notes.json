@@ -1,0 +1,29 @@
+{
+  "contract": "openapi.json",
+  "notes": {
+    "#/components/schemas/Observation": {
+      "source": "NWS API 3.11.0 components.schemas.Observation, copied verbatim except for the omissions below.",
+      "omitted": [
+        "@context, @id, @type: JSON-LD members",
+        "geometry: WKT string; the GeoJSON Feature wrapper (ObservationGeoJson) is not modelled",
+        "icon: marked deprecated in the source"
+      ],
+      "standards": [{ "name": "weather.gov API", "url": "https://api.weather.gov/openapi.json" }]
+    },
+    "#/components/schemas/QuantitativeValue": {
+      "source": "Copied verbatim. Modified schema.org QuantitativeValue.",
+      "comment": "qualityControl flags come from MADIS (https://madis.ncep.noaa.gov/madis_sfc_qc_notes.shtml); flag meanings were not opened for this contract."
+    },
+    "#/components/schemas/UnitOfMeasure": {
+      "source": "Copied verbatim.",
+      "comment": "Namespaces wmo/wmoUnit (WMO Codes Registry) and nwsUnit are called deprecated in the source. nwsUnit is custom and non-standard. No namespace or uc means UCUM."
+    },
+    "#/paths/~1stations~1{stationId}~1observations~1latest/get": {
+      "source": "NWS API path /stations/{stationId}/observations/latest, operationId station_observation_latest.",
+      "omitted": [
+        "application/ld+json and the two vnd.noaa XML representations",
+        "X-Correlation-Id, X-Request-Id, X-Server-Id response headers"
+      ]
+    }
+  }
+}

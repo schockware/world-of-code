@@ -1,0 +1,45 @@
+{
+  "contract": "observation.json",
+  "notes": {
+    "#/properties/station": {
+      "maps": {
+        "us": "Observation.stationId, Observation.stationName",
+        "international": "Datastream -> Thing (Thing.@iot.id, Thing.name)"
+      }
+    },
+    "#/properties/observedAt": {
+      "maps": {
+        "us": "Observation.timestamp (date-time)",
+        "international": "Observation.phenomenonTime when it is an instant"
+      },
+      "rationale": "Only the instant form is common. SensorThings also allows an interval; see README."
+    },
+    "#/properties/temperature": {
+      "maps": { "us": "Observation.temperature", "international": "Datastream whose ObservedProperty is air temperature" }
+    },
+    "#/properties/dewpoint": {
+      "maps": { "us": "Observation.dewpoint", "international": "Datastream whose ObservedProperty is dew point" }
+    },
+    "#/properties/relativeHumidity": {
+      "maps": { "us": "Observation.relativeHumidity", "international": "Datastream whose ObservedProperty is relative humidity" }
+    },
+    "#/properties/windDirection": {
+      "maps": { "us": "Observation.windDirection", "international": "Datastream whose ObservedProperty is wind direction" }
+    },
+    "#/properties/windSpeed": {
+      "maps": { "us": "Observation.windSpeed", "international": "Datastream whose ObservedProperty is wind speed" }
+    },
+    "#/properties/windGust": {
+      "maps": { "us": "Observation.windGust", "international": "Datastream whose ObservedProperty is wind gust" }
+    },
+    "#/properties/barometricPressure": {
+      "maps": { "us": "Observation.barometricPressure", "international": "Datastream whose ObservedProperty is station pressure" }
+    },
+    "#/properties/seaLevelPressure": {
+      "maps": { "us": "Observation.seaLevelPressure", "international": "Datastream whose ObservedProperty is sea level pressure" }
+    },
+    "#/properties/visibility": {
+      "maps": { "us": "Observation.visibility", "international": "Datastream whose ObservedProperty is visibility" }
+    }
+  }
+}
