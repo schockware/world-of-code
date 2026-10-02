@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="WorldOfCode.Encryption.Tests/WorldOfCode.Encryption.Tests.csproj" />
+  <Project Path="WorldOfCode.Encryption/WorldOfCode.Encryption.csproj" />
+</Solution>
