@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/enigma-m3.json",
+  "title": "Enigma M3 key",
+  "description": "The daily key-sheet settings plus the message start position for the Army and Air Force Enigma I. Every member lists the machine left to right, as an operator reads it; the last rotor is the fast one.",
+  "type": "object",
+  "required": [
+    "rotors",
+    "reflector",
+    "rings",
+    "positions",
+    "plugboard"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "rotors": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "I",
+          "II",
+          "III",
+          "IV",
+          "V"
+        ]
+      },
+      "description": "Walzenlage: three different rotors, left to right."
+    },
+    "reflector": {
+      "enum": [
+        "B",
+        "C"
+      ],
+      "description": "Umkehrwalze."
+    },
+    "rings": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "not": {
+        "pattern": "\n"
+      },
+      "description": "Ringstellung as letters, left to right. A is no offset; 01 on a key sheet is A."
+    },
+    "positions": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "not": {
+        "pattern": "\n"
+      },
+      "description": "Window letters at the start, left to right: the message key."
+    },
+    "plugboard": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z]{2}$",
+        "not": {
+          "pattern": "\n"
+        }
+      },
+      "description": "Steckerverbindungen: up to 10 pairs of letters. No letter may appear twice, and a letter cannot pair with itself; that rule is in the spec (ENC-ENIG-003), not this schema."
+    }
+  }
+}

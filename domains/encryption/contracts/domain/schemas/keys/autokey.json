@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/autokey.json",
+  "title": "Autokey key",
+  "description": "Key for both autokey-ciphertext and autokey-plaintext.",
+  "type": "object",
+  "required": ["primer"],
+  "additionalProperties": false,
+  "properties": {
+    "primer": { "$ref": "../letters.json", "description": "The letters that start the key stream. One letter is the README's IV (R for IV 17)." }
+  }
+}

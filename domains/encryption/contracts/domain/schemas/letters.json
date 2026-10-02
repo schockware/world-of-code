@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/letters.json",
+  "title": "Letters",
+  "description": "Text a cipher works on: one or more capital letters A-Z, and nothing else. No spaces, digits, punctuation, lowercase, or accented letters.",
+  "type": "string",
+  "pattern": "^[A-Z]+$",
+  "not": {
+    "pattern": "\n"
+  },
+  "$comment": "The 'not' rule rejects a trailing newline, which some regex engines let '$' match before."
+}

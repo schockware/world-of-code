@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/crack-result.json",
+  "title": "CrackResult",
+  "description": "One candidate a cracker reports for a ciphertext. Contract only: behavior is reserved for the CRACK area and has no requirements yet.",
+  "type": "object",
+  "required": [
+    "cipher",
+    "plaintext",
+    "key",
+    "score",
+    "candidatesEvaluated",
+    "elapsedMs"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "cipher": {
+      "$ref": "cipher-id.json"
+    },
+    "plaintext": {
+      "$ref": "letters.json",
+      "description": "The candidate plaintext: the ciphertext decrypted with key."
+    },
+    "key": {
+      "type": "object",
+      "description": "A key for cipher, in the shape of keys/{cipher}.json."
+    },
+    "score": {
+      "type": "number",
+      "description": "How language-like the plaintext is under the cracker's scorer. Scale and direction are reserved for the CRACK area."
+    },
+    "candidatesEvaluated": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Keys tried before this result was reported."
+    },
+    "elapsedMs": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Wall-clock time spent, in milliseconds."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "caesar"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/caesar.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "rot13"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/rot13.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "atbash"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/atbash.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "affine"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/affine.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "autokey-ciphertext"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/autokey.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "autokey-plaintext"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/autokey.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "skytale"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/skytale.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "enigma-m3"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/enigma-m3.json"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "cipher": {
+            "const": "m209"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "key": {
+            "$ref": "keys/m209.json"
+          }
+        }
+      }
+    }
+  ]
+}

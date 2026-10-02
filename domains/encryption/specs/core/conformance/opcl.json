@@ -1,0 +1,70 @@
+{
+  "area": "OPCL",
+  "spec": "../operator/opcl.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' rebuild letters that appear in published traffic or procedure.",
+  "vectors": [
+    {
+      "id": "x-separator",
+      "requirements": ["ENC-OPCL-001"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "meet"}, {"gap": 1}, {"word": "me"}, {"gap": 1}, {"word": "at"}, {"gap": 1}, {"word": "noon"}]},
+      "expect": {"outcome": "ok", "encoded": "MEETXMEXATXNOON", "separator": "x"}
+    },
+    {
+      "id": "x-gap-zero-allowed",
+      "requirements": ["ENC-OPCL-001"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "hand"}, {"gap": 0}, {"word": "shake"}]},
+      "expect": {"outcome": "ok", "encoded": "HANDSHAKE", "separator": "x"}
+    },
+    {
+      "id": "x-reject-gap-two",
+      "requirements": ["ENC-OPCL-001"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "meet"}, {"gap": 2}, {"word": "me"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.gap-out-of-range"}
+    },
+    {
+      "id": "spelled-no-separator",
+      "requirements": ["ENC-OPCL-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-spelled", "tokens": [{"word": "meet"}, {"gap": 0}, {"word": "me"}]},
+      "expect": {"outcome": "ok", "encoded": "MEETME", "separator": "spelled"}
+    },
+    {
+      "id": "spelled-reject-gap-one",
+      "requirements": ["ENC-OPCL-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-spelled", "tokens": [{"word": "meet"}, {"gap": 1}, {"word": "me"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.gap-out-of-range"}
+    },
+    {
+      "id": "english-digits",
+      "requirements": ["ENC-OPCL-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"number": "1234567890"}]},
+      "expect": {"outcome": "ok", "encoded": "ONETWOTHREEFOURFIVESIXSEVENEIGHTNINEZERO", "separator": "x"}
+    },
+    {
+      "id": "punctuation-table",
+      "requirements": ["ENC-OPCL-004"],
+      "operation": "prepare",
+      "input": {"operator": "classical-spelled", "tokens": [{"word": "ready"}, {"punct": "?"}, {"word": "yes"}, {"punct": ","}, {"word": "go"}, {"punct": "."}]},
+      "expect": {"outcome": "ok", "encoded": "READYQUERYYESCOMMAGOSTOP", "separator": "spelled"}
+    },
+    {
+      "id": "reject-colon",
+      "requirements": ["ENC-OPCL-004"],
+      "operation": "prepare",
+      "input": {"operator": "classical-spelled", "tokens": [{"word": "note"}, {"punct": ":"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unsupported-punctuation"}
+    },
+    {
+      "id": "no-length-limit",
+      "requirements": ["ENC-OPCL-005"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}]},
+      "expect": {"outcome": "ok", "encoded": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "separator": "x"}
+    }
+  ]
+}

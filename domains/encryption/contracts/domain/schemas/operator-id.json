@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/operator-id.json",
+  "title": "Operator identifier",
+  "description": "An operator procedure for preparing text. Case-sensitive.",
+  "enum": [
+    "classical-x",
+    "classical-spelled",
+    "enigma-m3-army",
+    "m209-army"
+  ]
+}

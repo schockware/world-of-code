@@ -1,0 +1,112 @@
+{
+  "area": "MSG",
+  "spec": "../msg.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "accept-x-separator",
+      "requirements": ["ENC-MSG-001", "ENC-MSG-002"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACKXATXDAWN", "separator": "x"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-spelled-separator",
+      "requirements": ["ENC-MSG-002"],
+      "operation": "validate",
+      "input": {"message": {"original": "Arrive 0600, bring 2 radios.", "encoded": "ARRIVEZEROSIXZEROZEROSTOPBRINGTWORADIOS", "separator": "spelled"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-z-separator",
+      "requirements": ["ENC-MSG-002"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn", "encoded": "ATTACKZATZDAWN", "separator": "z"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-encoded-unrelated-to-original",
+      "requirements": ["ENC-MSG-005"],
+      "operation": "validate",
+      "input": {"message": {"original": "hello", "encoded": "WORLD", "separator": "x"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-empty-original",
+      "requirements": ["ENC-MSG-004"],
+      "operation": "validate",
+      "input": {"message": {"original": "", "encoded": "NOORIGINAL", "separator": "spelled"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "reject-encoded-not-letters",
+      "requirements": ["ENC-MSG-001"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACK AT DAWN", "separator": "x"}},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-encoded-lowercase",
+      "requirements": ["ENC-MSG-001"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "attackxatxdawn", "separator": "x"}},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-encoded-empty",
+      "requirements": ["ENC-MSG-001"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "", "separator": "x"}},
+      "expect": {"outcome": "rejected", "reason": "text.empty"}
+    },
+    {
+      "id": "reject-unknown-separator",
+      "requirements": ["ENC-MSG-002"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACKQATQDAWN", "separator": "q"}},
+      "expect": {"outcome": "rejected", "reason": "msg.unknown-separator"}
+    },
+    {
+      "id": "reject-uppercase-separator",
+      "requirements": ["ENC-MSG-002"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACKXATXDAWN", "separator": "X"}},
+      "expect": {"outcome": "rejected", "reason": "msg.unknown-separator"}
+    },
+    {
+      "id": "reject-malformed-missing-original",
+      "requirements": ["ENC-MSG-003"],
+      "operation": "validate",
+      "input": {"message": {"encoded": "ATTACKXATXDAWN", "separator": "x"}},
+      "expect": {"outcome": "rejected", "reason": "msg.malformed"}
+    },
+    {
+      "id": "reject-malformed-missing-separator",
+      "requirements": ["ENC-MSG-003"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACKXATXDAWN"}},
+      "expect": {"outcome": "rejected", "reason": "msg.malformed"}
+    },
+    {
+      "id": "reject-malformed-extra-member",
+      "requirements": ["ENC-MSG-003"],
+      "operation": "validate",
+      "input": {"message": {"original": "Attack at dawn.", "encoded": "ATTACKXATXDAWN", "separator": "x", "priority": "urgent"}},
+      "expect": {"outcome": "rejected", "reason": "msg.malformed"}
+    },
+    {
+      "id": "reject-malformed-original-not-string",
+      "requirements": ["ENC-MSG-003"],
+      "operation": "validate",
+      "input": {"message": {"original": 42, "encoded": "ATTACKXATXDAWN", "separator": "x"}},
+      "expect": {"outcome": "rejected", "reason": "msg.malformed"}
+    },
+    {
+      "id": "roundtrip-original-preserved",
+      "requirements": ["ENC-MSG-004"],
+      "operation": "roundtrip",
+      "input": {"message": {"original": "  Café at 06:00, \"don't\" be late!\t", "encoded": "CAFEATSIXHUNDREDDONTBELATE", "separator": "spelled"}},
+      "expect": {"outcome": "ok", "result": {"original": "  Café at 06:00, \"don't\" be late!\t", "encoded": "CAFEATSIXHUNDREDDONTBELATE", "separator": "spelled"}}
+    }
+  ]
+}

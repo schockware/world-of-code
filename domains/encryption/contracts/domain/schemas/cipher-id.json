@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/cipher-id.json",
+  "title": "Cipher identifier",
+  "description": "The name of a cipher in the core spec set. Case-sensitive.",
+  "enum": [
+    "caesar",
+    "rot13",
+    "atbash",
+    "affine",
+    "autokey-ciphertext",
+    "autokey-plaintext",
+    "skytale",
+    "enigma-m3",
+    "m209"
+  ]
+}

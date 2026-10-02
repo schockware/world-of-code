@@ -1,0 +1,134 @@
+{
+  "area": "AUTO",
+  "spec": "../auto.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "ciphertext-readme-vector",
+      "requirements": ["ENC-AUTO-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "R"}, "text": "CANGEMINIREADTHIS"},
+      "expect": {"outcome": "ok", "text": "TTGMQCKXFWAADWDLD"},
+      "source": "domains/encryption/README.MD seed idea, IV 17 (spaces and punctuation removed); recomputed in docs/autokey.md"
+    },
+    {
+      "id": "ciphertext-readme-vector-decrypt",
+      "requirements": ["ENC-AUTO-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "R"}, "text": "TTGMQCKXFWAADWDLD"},
+      "expect": {"outcome": "ok", "text": "CANGEMINIREADTHIS"}
+    },
+    {
+      "id": "ciphertext-primer-a",
+      "requirements": ["ENC-AUTO-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "A"}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "HLWHV"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "ciphertext-primer-d",
+      "requirements": ["ENC-AUTO-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "D"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "DWPPRBBUXXTG"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "ciphertext-primer-keyword",
+      "requirements": ["ENC-AUTO-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "KEY"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "KXRKZBKSEKOR"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "ciphertext-primer-queenly",
+      "requirements": ["ENC-AUTO-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "QUEENLY"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "QNXEPVYJQXAC"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "ciphertext-decrypt-keyword",
+      "requirements": ["ENC-AUTO-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "KEY"}, "text": "KXRKZBKSEKOR"},
+      "expect": {"outcome": "ok", "text": "ATTACKATDAWN"}
+    },
+    {
+      "id": "ciphertext-wrong-primer-only-first-letter-wrong",
+      "requirements": ["ENC-AUTO-004", "ENC-CIPH-011"],
+      "operation": "decrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "A"}, "text": "TTGMQCKXFWAADWDLD"},
+      "expect": {"outcome": "ok", "text": "TANGEMINIREADTHIS"}
+    },
+    {
+      "id": "plaintext-primer-queenly",
+      "requirements": ["ENC-AUTO-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "QUEENLY"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "QNXEPVYTWTWP"},
+      "source": "docs/autokey.md section 6 (Wikipedia example)"
+    },
+    {
+      "id": "plaintext-primer-keyword",
+      "requirements": ["ENC-AUTO-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "KEY"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "KXRAVDAVNAPQ"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "plaintext-primer-single",
+      "requirements": ["ENC-AUTO-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "K"}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "KTMTCMKTWDWJ"},
+      "source": "docs/autokey.md section 6"
+    },
+    {
+      "id": "plaintext-decrypt-queenly",
+      "requirements": ["ENC-AUTO-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "QUEENLY"}, "text": "QNXEPVYTWTWP"},
+      "expect": {"outcome": "ok", "text": "ATTACKATDAWN"}
+    },
+    {
+      "id": "ciphertext-text-shorter-than-primer",
+      "requirements": ["ENC-AUTO-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": "QUEENLY"}, "text": "HI"},
+      "expect": {"outcome": "ok", "text": "XC"}
+    },
+    {
+      "id": "plaintext-text-shorter-than-primer",
+      "requirements": ["ENC-AUTO-005"],
+      "operation": "decrypt",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "QUEENLY"}, "text": "XC"},
+      "expect": {"outcome": "ok", "text": "HI"}
+    },
+    {
+      "id": "reject-primer-empty",
+      "requirements": ["ENC-AUTO-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": ""}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-primer-lowercase",
+      "requirements": ["ENC-AUTO-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "autokey-plaintext", "key": {"primer": "key"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-primer-number",
+      "requirements": ["ENC-AUTO-001", "ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "autokey-ciphertext", "key": {"primer": 17}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    }
+  ]
+}

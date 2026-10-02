@@ -1,0 +1,11 @@
+{
+  "contract": "crack-result.json",
+  "notes": {
+    "#/properties/cipher": { "rationale": "A result names its cipher so its key can be checked against that cipher's key contract." },
+    "#/properties/plaintext": { "rationale": "Taken from the README's CrackResult pseudo-signature.", "docs": ["../../../README.MD#cipher-interfacts-pseudo-signatures"] },
+    "#/properties/key": { "rationale": "The allOf rules tie the key's shape to cipher, so a result is checkable without running the cracker." },
+    "#/properties/score": { "rationale": "Scorers (quadgram fitness, index of coincidence, chi-squared) use different scales, some higher-is-better and some lower. The CRACK area fixes this before any requirement uses score." },
+    "#/properties/candidatesEvaluated": { "rationale": "Makes crackers comparable across nations and backends." },
+    "#/properties/elapsedMs": { "rationale": "Reported, never compared in conformance: timing depends on the machine. The backend (cpu-single, cpu-parallel, gpu) belongs to the cracker, not to the result." }
+  }
+}

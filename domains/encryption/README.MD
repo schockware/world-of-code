@@ -10,6 +10,56 @@ I just watched a documentary on Enigma and thought, "Why not?! This would be a f
 - Book Cipher
 - Anything our Claude companion contributed
 
+# Ground Rules
+- Capitalized A-Z only. 
+- Assume message was encoded via morse code at some point. 
+  - *We do not need to emulate this yet*
+  - No punctuation or numbers. Special puntuation encoding below.
+    - Spaces historically were either spelled out or encoded as X by operators.
+      - Per message use one or the other.
+    - Important punctuation was spelled out or omitted entirely.
+    - Numbers were always spelled out.
+- Original messages are in JSON objects.
+  - Include an original message (pre encoded)
+  - Include the morse + puncuation encoding.
+- ValidateKey, Encrypt, and Decrypt interfaces are the only public methods.
+  - To inspect anything internally, middleware needs to be loaded to expose anything.
+
+## Expectations
+We should be able to inspect the following states of the message:
+- Original Unaltered Message
+- Encoded Message (morse assumed not emulated, but it includes punctuation encoding and capitalizations)
+- Machine Encrypted Message
+  - Which is the same as the transmitted/recieved/intercepted message
+- Machine Decrypted Message
+  - Original machine output that the receiving operator decrypted.
+- Cracker Decrypted Message
+  - The cracked output that an enemy intelligence officer intercepted.
+
+# Cipher interfacts Pseudo Signatures
+```
+Cipher
+  name: string
+  encrypt(plaintext, key) -> ciphertext
+  decrypt(ciphertext, key) -> plaintext
+  validateKey(key) -> ok | error
+
+Cracker
+  cipher: string
+  backend: "cpu-single" | "cpu-parallel" | "gpu"
+  crack(ciphertext, options) -> CrackResult
+
+CrackResult
+  plaintext, key, score
+  candidatesEvaluated: int
+  elapsedMs: float
+```
+
+## Cracker
+We need to a Strategy pattern to select between algorithms that were historical vs modern, single cpu, multiple cpu, or gpu. 
+
+If possible containerize the crackers so we have more control over their environments.
+
 # Claude Contributions - Classical Cipher Project: Brief for Coding Assistant
 
 ## Goal

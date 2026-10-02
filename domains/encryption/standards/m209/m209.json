@@ -1,0 +1,14 @@
+{
+  "machine": "m209",
+  "description": "US Army Converter M-209 (Hagelin C-38). Wheels are listed left to right as the operator faces the machine. Each alphabet is the wheel's letters in order; position n on a wheel means the n-th letter of its own alphabet.",
+  "wheels": [
+    { "alphabet": "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "sensedOffset": 15 },
+    { "alphabet": "ABCDEFGHIJKLMNOPQRSTUVXYZ",  "sensedOffset": 14 },
+    { "alphabet": "ABCDEFGHIJKLMNOPQRSTUVX",    "sensedOffset": 13 },
+    { "alphabet": "ABCDEFGHIJKLMNOPQRSTU",      "sensedOffset": 12 },
+    { "alphabet": "ABCDEFGHIJKLMNOPQRS",        "sensedOffset": 11 },
+    { "alphabet": "ABCDEFGHIJKLMNOPQ",          "sensedOffset": 10 }
+  ],
+  "bars": 27,
+  "lugSlots": "0 is neutral (two slots); 1-6 face the guide arm of wheels 1-6"
+}

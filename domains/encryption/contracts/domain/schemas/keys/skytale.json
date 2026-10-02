@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/skytale.json",
+  "title": "Skytale key",
+  "type": "object",
+  "required": ["rows"],
+  "additionalProperties": false,
+  "properties": {
+    "rows": { "type": "integer", "minimum": 1, "description": "Letters around the rod, the number of grid rows. 1, or any value at least the text length, is the identity." }
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "area": "CAES",
+  "spec": "../caes.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "caesar-encrypt-shift-3-pangram",
+      "requirements": ["ENC-CAES-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"},
+      "expect": {"outcome": "ok", "text": "WKHTXLFNEURZQIRAMXPSVRYHUWKHODCBGRJ"},
+      "source": "docs/caesar.md section 6 (spaces removed)"
+    },
+    {
+      "id": "caesar-encrypt-shift-3-attack",
+      "requirements": ["ENC-CAES-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "DWWDFNDWGDZQ"},
+      "source": "docs/caesar.md section 6"
+    },
+    {
+      "id": "caesar-decrypt-shift-3",
+      "requirements": ["ENC-CAES-002"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "KHOORZRUOG"},
+      "expect": {"outcome": "ok", "text": "HELLOWORLD"},
+      "source": "docs/caesar.md section 6 (punctuation removed)"
+    },
+    {
+      "id": "caesar-encrypt-wraps",
+      "requirements": ["ENC-CAES-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 25}, "text": "ABZ"},
+      "expect": {"outcome": "ok", "text": "ZAY"}
+    },
+    {
+      "id": "caesar-decrypt-wraps",
+      "requirements": ["ENC-CAES-002"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 25}, "text": "ZAY"},
+      "expect": {"outcome": "ok", "text": "ABZ"}
+    },
+    {
+      "id": "caesar-shift-0-identity",
+      "requirements": ["ENC-CAES-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 0}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "HELLOWORLD"}
+    },
+    {
+      "id": "caesar-accept-shift-25",
+      "requirements": ["ENC-CAES-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "caesar", "key": {"shift": 25}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "caesar-reject-shift-26",
+      "requirements": ["ENC-CAES-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "caesar", "key": {"shift": 26}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "caesar-reject-shift-negative",
+      "requirements": ["ENC-CAES-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "caesar", "key": {"shift": -3}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "rot13-encrypt",
+      "requirements": ["ENC-CAES-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "rot13", "key": {}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "URYYBJBEYQ"},
+      "source": "docs/caesar.md section 6 (punctuation removed)"
+    },
+    {
+      "id": "rot13-decrypt-equals-encrypt",
+      "requirements": ["ENC-CAES-005"],
+      "operation": "decrypt",
+      "input": {"cipher": "rot13", "key": {}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "URYYBJBEYQ"}
+    },
+    {
+      "id": "rot13-encrypt-pangram-prefix",
+      "requirements": ["ENC-CAES-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "rot13", "key": {}, "text": "THEQUICKBROWNFOX"},
+      "expect": {"outcome": "ok", "text": "GURDHVPXOEBJASBK"},
+      "source": "docs/caesar.md section 6 (spaces removed)"
+    },
+    {
+      "id": "rot13-reject-key-member",
+      "requirements": ["ENC-CAES-004"],
+      "operation": "validateKey",
+      "input": {"cipher": "rot13", "key": {"shift": 13}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "atbash-encrypt",
+      "requirements": ["ENC-CAES-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "atbash", "key": {}, "text": "WIZARD"},
+      "expect": {"outcome": "ok", "text": "DRAZIW"},
+      "source": "docs/caesar.md section 6"
+    },
+    {
+      "id": "atbash-encrypt-hello",
+      "requirements": ["ENC-CAES-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "atbash", "key": {}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "SVOOLDLIOW"},
+      "source": "docs/caesar.md section 6 (punctuation removed)"
+    },
+    {
+      "id": "atbash-decrypt-equals-encrypt",
+      "requirements": ["ENC-CAES-006"],
+      "operation": "decrypt",
+      "input": {"cipher": "atbash", "key": {}, "text": "WIZARD"},
+      "expect": {"outcome": "ok", "text": "DRAZIW"}
+    },
+    {
+      "id": "atbash-reject-key-member",
+      "requirements": ["ENC-CAES-004"],
+      "operation": "validateKey",
+      "input": {"cipher": "atbash", "key": {"reverse": true}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    }
+  ]
+}

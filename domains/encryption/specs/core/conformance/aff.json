@@ -1,0 +1,116 @@
+{
+  "area": "AFF",
+  "spec": "../aff.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "affine-encrypt-5-8",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "affine", "key": {"a": 5, "b": 8}, "text": "AFFINECIPHER"},
+      "expect": {"outcome": "ok", "text": "IHHWVCSWFRCP"},
+      "source": "docs/caesar.md section 6 (Wikipedia example)"
+    },
+    {
+      "id": "affine-decrypt-5-8",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "decrypt",
+      "input": {"cipher": "affine", "key": {"a": 5, "b": 8}, "text": "IHHWVCSWFRCP"},
+      "expect": {"outcome": "ok", "text": "AFFINECIPHER"}
+    },
+    {
+      "id": "affine-encrypt-7-3",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "affine", "key": {"a": 7, "b": 3}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "AFCCX"},
+      "source": "docs/caesar.md section 6"
+    },
+    {
+      "id": "affine-decrypt-7-3",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "decrypt",
+      "input": {"cipher": "affine", "key": {"a": 7, "b": 3}, "text": "AFCCX"},
+      "expect": {"outcome": "ok", "text": "HELLO"}
+    },
+    {
+      "id": "affine-a1-equals-caesar",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "affine", "key": {"a": 1, "b": 3}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "KHOOR"},
+      "source": "docs/caesar.md section 6"
+    },
+    {
+      "id": "affine-a25-b25-equals-atbash",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "affine", "key": {"a": 25, "b": 25}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "SVOOL"},
+      "source": "docs/caesar.md section 6"
+    },
+    {
+      "id": "affine-decrypt-a25",
+      "requirements": ["ENC-AFF-003"],
+      "operation": "decrypt",
+      "input": {"cipher": "affine", "key": {"a": 25, "b": 0}, "text": "ABCXYZ"},
+      "expect": {"outcome": "ok", "text": "AZYDCB"}
+    },
+    {
+      "id": "affine-accept-all-invertible",
+      "requirements": ["ENC-AFF-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 23, "b": 0}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "affine-reject-a-even",
+      "requirements": ["ENC-AFF-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 2, "b": 0}},
+      "expect": {"outcome": "rejected", "reason": "key.not-invertible"}
+    },
+    {
+      "id": "affine-reject-a-13",
+      "requirements": ["ENC-AFF-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 13, "b": 5}},
+      "expect": {"outcome": "rejected", "reason": "key.not-invertible"}
+    },
+    {
+      "id": "affine-reject-a-0",
+      "requirements": ["ENC-AFF-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 0, "b": 5}},
+      "expect": {"outcome": "rejected", "reason": "key.not-invertible"}
+    },
+    {
+      "id": "affine-reject-a-out-of-range",
+      "requirements": ["ENC-AFF-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 27, "b": 0}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "affine-reject-b-out-of-range",
+      "requirements": ["ENC-AFF-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 5, "b": 26}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "affine-precedence-range-over-invertible",
+      "requirements": ["ENC-AFF-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 28, "b": 0}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "affine-reject-missing-b",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 5}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    }
+  ]
+}

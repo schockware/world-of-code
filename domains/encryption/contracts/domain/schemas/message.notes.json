@@ -1,0 +1,26 @@
+{
+  "contract": "message.json",
+  "notes": {
+    "#/properties/original": {
+      "rationale": "The ground rules keep the message as written alongside its encoding, so nothing the operator dropped (punctuation, case, digits) is lost to the record.",
+      "docs": [
+        "../../../README.MD#ground-rules"
+      ]
+    },
+    "#/properties/encoded": {
+      "rationale": "Ciphers see only A-Z. The encoding stands in for the Morse-era operator step: spaces as X or spelled out, numbers spelled out, important punctuation spelled or omitted. Morse itself is not emulated yet.",
+      "docs": [
+        "../../../README.MD#ground-rules",
+        "../../../docs/enigma.md#9-ambiguities-a-spec-must-pin-down"
+      ]
+    },
+    "#/properties/separator": {
+      "rationale": "Operators used one convention per message (README ground rules), and the convention depends on the machine: no single space marker works for every cipher. The operator that prepared the message sets it. Ciphers never read it.",
+      "history": "German Enigma traffic used X between words and as a full stop. M-209 operators keyed Z for a space, and the machine printed every Z as a space in decipher mode, so readers decided by experience which Zs were real letters.",
+      "docs": [
+        "../../../docs/operators.md",
+        "../../../docs/m209.md#7-quirks-worth-preserving-in-a-faithful-implementation"
+      ]
+    }
+  }
+}

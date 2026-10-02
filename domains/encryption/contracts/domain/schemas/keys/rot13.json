@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/rot13.json",
+  "title": "ROT13 key",
+  "description": "ROT13 has no secret. Its key is the empty object.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {}
+}

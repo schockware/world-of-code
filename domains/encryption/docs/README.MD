@@ -15,6 +15,7 @@ What each cipher is based on, so we do not have to relearn it. These are researc
 | Skytale | [skytale.md](skytale.md) | Historical evidence is debated |
 | Enigma | [enigma.md](enigma.md), [enigma-wiring-data.md](enigma-wiring-data.md) | Wiring tables with sources |
 | M-209 | [m209.md](m209.md), [m209-wiring-data.md](m209-wiring-data.md) | No primary US Army example found |
+| Operator text preparation | [operators.md](operators.md) | Enigma Army and Navy, M-209 (TM 11-380). Researched 2026-10-02 |
 
 ## Corrections to the domain README found by this research
 

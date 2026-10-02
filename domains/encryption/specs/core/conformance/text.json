@@ -1,0 +1,105 @@
+{
+  "area": "TEXT",
+  "spec": "../text.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "accept-single-letter",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "A"},
+      "expect": {"outcome": "ok", "text": "D"}
+    },
+    {
+      "id": "accept-full-alphabet",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
+      "expect": {"outcome": "ok", "text": "DEFGHIJKLMNOPQRSTUVWXYZABC"}
+    },
+    {
+      "id": "reject-not-letters-lowercase",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "hello"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-mixed-case",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "Hello"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-space",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "HELLO WORLD"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-punctuation",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "HELLO!"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-digit",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "AGENT007"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-umlaut",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "ÄPFEL"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-trailing-newline",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "HELLO\n"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-fullwidth",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "ＡＢＣ"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-not-letters-on-decrypt",
+      "requirements": ["ENC-TEXT-001"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": "KHOOR ZRUOG"},
+      "expect": {"outcome": "rejected", "reason": "text.not-letters"}
+    },
+    {
+      "id": "reject-empty-encrypt",
+      "requirements": ["ENC-TEXT-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": ""},
+      "expect": {"outcome": "rejected", "reason": "text.empty"}
+    },
+    {
+      "id": "reject-empty-decrypt",
+      "requirements": ["ENC-TEXT-002"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3}, "text": ""},
+      "expect": {"outcome": "rejected", "reason": "text.empty"}
+    },
+    {
+      "id": "numbering-a-is-zero",
+      "requirements": ["ENC-TEXT-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 1}, "text": "AZ"},
+      "expect": {"outcome": "ok", "text": "BA"}
+    }
+  ]
+}

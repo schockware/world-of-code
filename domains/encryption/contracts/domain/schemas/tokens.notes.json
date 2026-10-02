@@ -1,0 +1,10 @@
+{
+  "contract": "tokens.json",
+  "notes": {
+    "#/items/oneOf/0/properties/word": { "rationale": "Uppercasing is mechanical, so any case is accepted. Other letters (umlauts, accents) are rejected: transliteration varied by operator and era, so the caller decides it." },
+    "#/items/oneOf/1/properties/name": { "rationale": "Enigma operators wrote foreign names twice between Xs, because a garbled name cannot be guessed from context.", "docs": ["../../../docs/operators.md#1-enigma-german-army-and-air-force-heer-luftwaffe"] },
+    "#/items/oneOf/2/properties/number": { "rationale": "No machine had digit keys. Numbers are a string so leading zeros (0600) survive." },
+    "#/items/oneOf/3/properties/punct": { "rationale": "Which marks an operator can write is in each operator's spec. Leaving a mark out is the operator's judgment: omit the token." },
+    "#/items/oneOf/4/properties/gap": { "rationale": "Separators are never inserted implicitly. The M-209 1947 manual made spacing a per-message random choice against cribs, so the choice has to be an input to stay reproducible.", "docs": ["../../../docs/operators.md#3-m-209-us-army"] }
+  }
+}

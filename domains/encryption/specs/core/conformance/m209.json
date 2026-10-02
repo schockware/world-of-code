@@ -1,0 +1,287 @@
+{
+  "area": "M209",
+  "spec": "../m209.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "published-check-fm",
+      "requirements": ["ENC-M209-004", "ENC-M209-005", "ENC-M209-006", "ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "AAAAAA"}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "TNMYSCRMKKUHLKWLDQHMRQOLWR"},
+      "source": "Blair key table FM (raw file); also the m209 library tests. docs/m209-wiring-data.md section 6.1"
+    },
+    {
+      "id": "published-check-aa",
+      "requirements": ["ENC-M209-004", "ENC-M209-005", "ENC-M209-006", "ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["FGIKOPRSUVWYZ", "DFGKLMOTUY", "ADEFGIORTUVX", "ACFGHILMRSU", "BCDEFJKLPS", "EFGHIJLMNP"], "lugs": ["0-4", "0-5", "0-5", "0-5", "0-5", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "1-0", "1-0", "1-0", "1-0", "1-0", "1-2", "1-5", "1-5", "1-5", "1-5", "3-0", "3-0", "3-0", "3-4", "3-6", "5-6"], "positions": "AAAAAA"}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "QLRRNTPTFUTRPTNMWQTVJLIJEJ"},
+      "source": "m209 library unit tests, attributed to Blair's AA key list. docs/m209-wiring-data.md section 6.1"
+    },
+    {
+      "id": "published-check-yl",
+      "requirements": ["ENC-M209-004", "ENC-M209-005", "ENC-M209-006", "ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BFJKLOSTUWXZ", "ABDJKLMORTUV", "EHJKNPQRSX", "ABCHIJLMPQR", "BCDGJLNOPQS", "AEFHIJP"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-4", "0-4", "0-4", "0-5", "0-5", "0-5", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "2-5", "2-6", "3-4", "4-5"], "positions": "AAAAAA"}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "OZGPKAFVAJJYRZWLRJEGMOVLUM"},
+      "source": "m209 library unit tests, attributed to Blair's YL key list. docs/m209-wiring-data.md section 6.1"
+    },
+    {
+      "id": "published-check-ab",
+      "requirements": ["ENC-M209-004", "ENC-M209-005", "ENC-M209-006", "ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BDFGIKRSTUWX", "BCEJKLORSUX", "CFHJKLMQSTU", "ABCDHIJMOPRTU", "BCEFINPS", "ACDEHJN"], "lugs": ["0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "0-5", "0-5", "0-5", "0-5", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "2-0", "2-0", "3-0", "3-5", "3-5", "3-6", "4-5"], "positions": "AAAAAA"}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "GZWUUSFYQNNFAKKFXSENFAFMFB"},
+      "source": "m209 library documentation tutorial. docs/m209-wiring-data.md section 6.1"
+    },
+    {
+      "id": "published-fm-attack-at-dawn",
+      "requirements": ["ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "FPKFMH"}, "text": "ATTACKZATZDAWN"},
+      "expect": {"outcome": "ok", "text": "NQHNLCAARZOLTV"},
+      "source": "m209 library test_procedure.py: groups NQHNL CAARZ OLTVX, with the final X as padding. Internal indicator FPKFMH. docs/m209-wiring-data.md section 6.3"
+    },
+    {
+      "id": "published-fm-mission-accomplished",
+      "requirements": ["ENC-M209-007", "ENC-M209-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "PLIHKI"}, "text": "JSCPSXZTGRHHWJGBDKKKSHISCIMDFKRLUVHTWGAWSUYMMVZBQPOEBJEKPMBWGPGNIOFGALVRYJCLSPLJGRFYEUQVZTPSNDTOAPYGSKGKMCKQTDJCPBENHYRX"},
+      "expect": {"outcome": "ok", "text": "MISSIONZACCOMPLISHEDZXZALLZENEMYZFORCESZNEUTRALIZEDZXZZEROZCASUALTIESZXZEIGHTZPRISONERSZTAKENZXZAWAITINGZFURTHERZORDERSO"},
+      "source": "m209 library test attributed to Blair; indicator groups removed. The published plaintext prints each Z as a space (decipher mode). docs/m209-wiring-data.md section 6.3"
+    },
+    {
+      "id": "published-indicator-tape",
+      "requirements": ["ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "ABCDEF"}, "text": "GGGGGGGGGGGG"},
+      "expect": {"outcome": "ok", "text": "FPKFWMHUPLCD"},
+      "source": "Blair, Practical Use of the M-209, chapter 4 (tape FPKFW MHUPL CD). docs/m209-wiring-data.md section 6.2"
+    },
+    {
+      "id": "fm-attack-at-dawn-decrypt",
+      "requirements": ["ENC-M209-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "FPKFMH"}, "text": "NQHNLCAARZOLTV"},
+      "expect": {"outcome": "ok", "text": "ATTACKZATZDAWN"}
+    },
+    {
+      "id": "aa-start-ygxrel",
+      "requirements": ["ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["FGIKOPRSUVWYZ", "DFGKLMOTUY", "ADEFGIORTUVX", "ACFGHILMRSU", "BCDEFJKLPS", "EFGHIJLMNP"], "lugs": ["0-4", "0-5", "0-5", "0-5", "0-5", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "1-0", "1-0", "1-0", "1-0", "1-0", "1-2", "1-5", "1-5", "1-5", "1-5", "3-0", "3-0", "3-0", "3-4", "3-6", "5-6"], "positions": "YGXREL"}, "text": "ATTACKZATZDAWN"},
+      "expect": {"outcome": "ok", "text": "SYCSRPJZGBDVPX"}
+    },
+    {
+      "id": "fm-pangram",
+      "requirements": ["ENC-M209-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "ABCDEF"}, "text": "THEQUICKBROWNFOX"},
+      "expect": {"outcome": "ok", "text": "SOMVIKLQUAUNNITQ"}
+    },
+    {
+      "id": "fm-pangram-decrypt-same-operation",
+      "requirements": ["ENC-M209-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "ABCDEF"}, "text": "SOMVIKLQUAUNNITQ"},
+      "expect": {"outcome": "ok", "text": "THEQUICKBROWNFOX"}
+    },
+    {
+      "id": "bar-and-lug-order-irrelevant",
+      "requirements": ["ENC-M209-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["5-4", "4-3", "6-1", "5-1", "5-0", "5-0", "4-0", "4-0", "4-0", "4-0", "4-0", "3-0", "3-0", "3-0", "3-0", "3-0", "3-0", "3-0", "0-2", "0-2", "0-2", "0-2", "0-2", "0-2", "0-2", "0-2", "0-1"], "positions": "AAAAAA"}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "TNMYSCRMKKUHLKWLDQHMRQOLWR"}
+    },
+    {
+      "id": "no-pins-is-atbash",
+      "requirements": ["ENC-M209-005", "ENC-M209-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2", "1-2"], "positions": "AAAAAA"}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "SVOOL"}
+    },
+    {
+      "id": "all-bars-fire-k-27-folds",
+      "requirements": ["ENC-M209-005", "ENC-M209-006", "ENC-M209-009"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "", "", "", "", ""], "lugs": ["1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0", "1-0"], "positions": "AAAAAA"}, "text": "AB"},
+      "expect": {"outcome": "ok", "text": "AZ"}
+    },
+    {
+      "id": "bar-counts-once",
+      "requirements": ["ENC-M209-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["ABCDEFGHIJKLMNOPQRSTUVWXYZ", "ABCDEFGHIJKLMNOPQRSTUVXYZ", "", "", "", ""], "lugs": ["1-2", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}, "text": "AAA"},
+      "expect": {"outcome": "ok", "text": "AAA"}
+    },
+    {
+      "id": "wheel-2-skips-w",
+      "requirements": ["ENC-M209-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["", "X", "", "", "", ""], "lugs": ["2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0"], "positions": "AHAAAA"}, "text": "AAA"},
+      "expect": {"outcome": "ok", "text": "ZAZ"}
+    },
+    {
+      "id": "wheel-3-wraps-x-to-a",
+      "requirements": ["ENC-M209-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "A", "", "", ""], "lugs": ["0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3"], "positions": "AAJAAA"}, "text": "AAA"},
+      "expect": {"outcome": "ok", "text": "ZAZ"}
+    },
+    {
+      "id": "sensed-pin-is-offset",
+      "requirements": ["ENC-M209-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", "K"], "lugs": ["0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6", "0-6"], "positions": "AAAAAA"}, "text": "AA"},
+      "expect": {"outcome": "ok", "text": "AZ"}
+    },
+    {
+      "id": "accept-empty-pins-neutral-lugs",
+      "requirements": ["ENC-M209-001", "ENC-M209-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-last-letter-each-wheel",
+      "requirements": ["ENC-M209-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"], "positions": "ZZXUSQ"}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "reject-malformed-missing-positions",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["BCEJOPSTUVXY", "ACDHJLMNOQRUYZ", "AEHJLOQRUV", "DFGILMNPQS", "CEHIJLNPS", "ACDFHIMN"], "lugs": ["1-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "2-0", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-3", "0-4", "0-4", "0-4", "0-4", "0-4", "0-5", "0-5", "1-5", "1-6", "3-4", "4-5"]}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-26-bars",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-lug-shorthand",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["2-0*8", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-lug-array",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": [[1, 0], "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-five-wheels",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-pins-lowercase",
+      "requirements": ["ENC-M209-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["abc", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-pin-w-on-wheel-2",
+      "requirements": ["ENC-M209-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "W", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "reject-pin-z-on-wheel-4",
+      "requirements": ["ENC-M209-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "Z", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "reject-repeated-pin",
+      "requirements": ["ENC-M209-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["AAB", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.repeated-pin"}
+    },
+    {
+      "id": "reject-lug-out-of-range",
+      "requirements": ["ENC-M209-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["7-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "reject-lug-conflict",
+      "requirements": ["ENC-M209-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["3-3", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.lug-conflict"}
+    },
+    {
+      "id": "reject-positions-five-letters",
+      "requirements": ["ENC-M209-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-positions-lowercase",
+      "requirements": ["ENC-M209-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "aaaaaa"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-position-w-on-wheel-2",
+      "requirements": ["ENC-M209-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AWAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "reject-position-r-on-wheel-6",
+      "requirements": ["ENC-M209-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAR"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "precedence-pins-over-lugs",
+      "requirements": ["ENC-M209-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "W", "", "", "", ""], "lugs": ["3-3", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "precedence-not-on-wheel-over-repeated",
+      "requirements": ["ENC-M209-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "AAW", "", "", "", ""], "lugs": ["0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.not-on-wheel"}
+    },
+    {
+      "id": "precedence-range-over-conflict",
+      "requirements": ["ENC-M209-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["3-3", "8-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "AAAAAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "precedence-lugs-over-positions",
+      "requirements": ["ENC-M209-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "m209", "key": {"pins": ["", "", "", "", "", ""], "lugs": ["3-3", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0", "0-0"], "positions": "aaaaaa"}},
+      "expect": {"outcome": "rejected", "reason": "key.lug-conflict"}
+    }
+  ]
+}

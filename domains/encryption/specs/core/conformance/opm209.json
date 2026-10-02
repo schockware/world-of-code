@@ -1,0 +1,80 @@
+{
+  "area": "OPM209",
+  "spec": "../operator/opm209.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' rebuild letters that appear in published traffic or procedure.",
+  "vectors": [
+    {
+      "id": "attack-at-dawn",
+      "requirements": ["ENC-OPM209-001"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "attack"}, {"gap": 1}, {"word": "at"}, {"gap": 1}, {"word": "dawn"}]},
+      "expect": {"outcome": "ok", "encoded": "ATTACKZATZDAWN", "separator": "z"},
+      "source": "m209 library test_procedure.py: plaintext ATTACKZATZDAWN (docs/m209-wiring-data.md section 6.3)"
+    },
+    {
+      "id": "mission-accomplished",
+      "requirements": ["ENC-OPM209-001", "ENC-OPM209-003"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "mission"}, {"gap": 1}, {"word": "accomplished"}, {"gap": 1}, {"punct": "."}, {"gap": 1}, {"word": "all"}, {"gap": 1}, {"word": "enemy"}, {"gap": 1}, {"word": "forces"}, {"gap": 1}, {"word": "neutralized"}, {"gap": 1}, {"punct": "."}, {"gap": 1}, {"word": "zero"}, {"gap": 1}, {"word": "casualties"}, {"gap": 1}, {"punct": "."}, {"gap": 1}, {"word": "eight"}, {"gap": 1}, {"word": "prisoners"}, {"gap": 1}, {"word": "taken"}, {"gap": 1}, {"punct": "."}, {"gap": 1}, {"word": "awaiting"}, {"gap": 1}, {"word": "further"}, {"gap": 1}, {"word": "orders"}]},
+      "expect": {"outcome": "ok", "encoded": "MISSIONZACCOMPLISHEDZXZALLZENEMYZFORCESZNEUTRALIZEDZXZZEROZCASUALTIESZXZEIGHTZPRISONERSZTAKENZXZAWAITINGZFURTHERZORDERS", "separator": "z"},
+      "source": "m209 library test attributed to Blair: decrypts to this text plus one padding letter (docs/m209-wiring-data.md section 6.3)"
+    },
+    {
+      "id": "spacing-variation-1947",
+      "requirements": ["ENC-OPM209-001"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "attack"}, {"gap": 2}, {"word": "at"}, {"gap": 0}, {"word": "dawn"}]},
+      "expect": {"outcome": "ok", "encoded": "ATTACKZZATDAWN", "separator": "z"},
+      "source": "docs/operators.md section 3: TM 11-380 (1947) spacing variation"
+    },
+    {
+      "id": "reject-three-z",
+      "requirements": ["ENC-OPM209-001"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "attack"}, {"gap": 3}, {"word": "at"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.gap-out-of-range"}
+    },
+    {
+      "id": "english-digits",
+      "requirements": ["ENC-OPM209-002"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "hill"}, {"gap": 1}, {"number": "610"}]},
+      "expect": {"outcome": "ok", "encoded": "HILLZSIXONEZERO", "separator": "z"}
+    },
+    {
+      "id": "full-stop-is-x",
+      "requirements": ["ENC-OPM209-003"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "done"}, {"gap": 1}, {"punct": "."}]},
+      "expect": {"outcome": "ok", "encoded": "DONEZX", "separator": "z"}
+    },
+    {
+      "id": "reject-comma",
+      "requirements": ["ENC-OPM209-003"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "yes"}, {"punct": ","}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unsupported-punctuation"}
+    },
+    {
+      "id": "name-is-word",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"name": "Paris"}]},
+      "expect": {"outcome": "ok", "encoded": "PARIS", "separator": "z"}
+    },
+    {
+      "id": "accept-500-letters",
+      "requirements": ["ENC-OPM209-004"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}]},
+      "expect": {"outcome": "ok", "encoded": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "separator": "z"}
+    },
+    {
+      "id": "reject-501-letters",
+      "requirements": ["ENC-OPM209-004"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}, {"gap": 2}]},
+      "expect": {"outcome": "rejected", "reason": "operator.too-long"}
+    }
+  ]
+}

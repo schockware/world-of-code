@@ -1,0 +1,110 @@
+{
+  "area": "OPENIG",
+  "spec": "../operator/openig.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' rebuild letters that appear in published traffic or procedure.",
+  "vectors": [
+    {
+      "id": "barbarossa-time-phrase",
+      "requirements": ["ENC-OPENIG-001", "ENC-OPENIG-002"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "um"}, {"gap": 1}, {"number": "1830"}, {"gap": 1}, {"word": "Uhr"}, {"gap": 0}, {"word": "angetreten"}]},
+      "expect": {"outcome": "ok", "encoded": "UMXEINSAQTDREINULLXUHRANGETRETEN", "separator": "x"},
+      "source": "Operation Barbarossa message, 1941 (docs/enigma.md section 10, V3): ...UMXEINSAQTDREINULLXUHRANGETRETEN..."
+    },
+    {
+      "id": "barbarossa-richtung",
+      "requirements": ["ENC-OPENIG-003"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "Fliegerstrasze"}, {"gap": 0}, {"word": "Richtung"}]},
+      "expect": {"outcome": "ok", "encoded": "FLIEGERSTRASZERIQTUNG", "separator": "x"},
+      "source": "Operation Barbarossa message, 1941: ...FLIEGERSTRASZERIQTUNG..."
+    },
+    {
+      "id": "german-digits",
+      "requirements": ["ENC-OPENIG-002"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"number": "0123456789"}]},
+      "expect": {"outcome": "ok", "encoded": "NULLEINSZWODREIVIERFUNFSEQSSIEBENAQTNEUN", "separator": "x"},
+      "source": "docs/operators.md section 1 (EINS from Barbarossa traffic; the procedure page writes EINZ)"
+    },
+    {
+      "id": "ch-to-q-in-words",
+      "requirements": ["ENC-OPENIG-003"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "acht"}]},
+      "expect": {"outcome": "ok", "encoded": "AQT", "separator": "x"},
+      "source": "docs/operators.md section 1: ACHT became AQT"
+    },
+    {
+      "id": "ch-to-q-every-occurrence",
+      "requirements": ["ENC-OPENIG-003"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "Schach"}]},
+      "expect": {"outcome": "ok", "encoded": "SQAQ", "separator": "x"}
+    },
+    {
+      "id": "ch-to-q-in-names",
+      "requirements": ["ENC-OPENIG-003", "ENC-OPENIG-005"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"name": "Munchen"}]},
+      "expect": {"outcome": "ok", "encoded": "XMUNQENXMUNQENX", "separator": "x"}
+    },
+    {
+      "id": "name-delimited-twice",
+      "requirements": ["ENC-OPENIG-005"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "nach"}, {"gap": 1}, {"name": "Paris"}]},
+      "expect": {"outcome": "ok", "encoded": "NAQXXPARISXPARISX", "separator": "x"},
+      "source": "docs/operators.md section 1: XPARISXPARISX"
+    },
+    {
+      "id": "punctuation-table",
+      "requirements": ["ENC-OPENIG-004"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "wann"}, {"punct": "?"}, {"word": "ja"}, {"punct": ","}, {"punct": "("}, {"word": "heute"}, {"punct": ")"}, {"punct": "\""}, {"word": "los"}, {"punct": "\""}, {"punct": "."}]},
+      "expect": {"outcome": "ok", "encoded": "WANNFRAGEJAZZKLAMHEUTEKLAMXLOSXX", "separator": "x"}
+    },
+    {
+      "id": "full-stop-is-x",
+      "requirements": ["ENC-OPENIG-004"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "ende"}, {"punct": "."}]},
+      "expect": {"outcome": "ok", "encoded": "ENDEX", "separator": "x"}
+    },
+    {
+      "id": "reject-gap-two",
+      "requirements": ["ENC-OPENIG-001"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "ab"}, {"gap": 2}, {"word": "an"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.gap-out-of-range"}
+    },
+    {
+      "id": "reject-colon",
+      "requirements": ["ENC-OPENIG-004"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "an"}, {"punct": ":"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unsupported-punctuation"}
+    },
+    {
+      "id": "accept-250-letters",
+      "requirements": ["ENC-OPENIG-006"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}]},
+      "expect": {"outcome": "ok", "encoded": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "separator": "x"}
+    },
+    {
+      "id": "reject-251-letters",
+      "requirements": ["ENC-OPENIG-006"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.too-long"}
+    },
+    {
+      "id": "reject-too-long-after-expansion",
+      "requirements": ["ENC-OPENIG-006"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}, {"number": "1"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.too-long"}
+    }
+  ]
+}

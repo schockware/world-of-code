@@ -1,0 +1,25 @@
+{
+  "contract": "enigma-m3.json",
+  "notes": {
+    "#/properties/rotors": {
+      "rationale": "M3 here means the Army and Air Force Enigma I, with a pool of five rotors. The naval rotors VI-VIII are left for an M4 spec; until it exists they are unknown components.",
+      "docs": ["../../../../docs/enigma.md#21-naming-wrinkle-what-m3-means"]
+    },
+    "#/properties/reflector": {
+      "rationale": "B was standard; C saw limited wartime use. Reflector A was replaced before the war and is left out.",
+      "docs": ["../../../../docs/enigma-wiring-data.md#4-reflectors-umkehrwalzen-enigma-i-and-m3"]
+    },
+    "#/properties/rings": {
+      "rationale": "Letters, not key-sheet numbers, so every key member uses one alphabet. Converting 01-26 to A-Z is a population concern.",
+      "docs": ["../../../../docs/enigma.md#9-ambiguities-a-spec-must-pin-down"]
+    },
+    "#/properties/positions": {
+      "rationale": "The machine is modeled without the indicator procedure: the caller supplies the start position directly. Indicators and the sloppy-operator habits are an operator layer, not yet specified.",
+      "docs": ["../../../../docs/enigma.md#81-daily-key-sheet-message-key-and-indicator"]
+    },
+    "#/properties/plugboard": {
+      "rationale": "Ten cables was Army practice from 1939. Fewer were valid and used earlier, so 0 to 10 pairs are accepted. The keyspace peaks at 11 pairs, which is why the limit is a real parameter.",
+      "docs": ["../../../../docs/enigma.md#7-key-count-arithmetic-and-correction-to-the-readme"]
+    }
+  }
+}

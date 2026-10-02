@@ -1,0 +1,124 @@
+{
+  "area": "SKY",
+  "spec": "../sky.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "encrypt-full-grid",
+      "requirements": ["ENC-SKY-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 4}, "text": "HELPMEIAMUNDERATTACK"},
+      "expect": {"outcome": "ok", "text": "HENTEIDTLAEAPMRCMUAK"},
+      "source": "docs/skytale.md section 6"
+    },
+    {
+      "id": "encrypt-square-grid",
+      "requirements": ["ENC-SKY-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 5}, "text": "WEAREDISCOVEREDFLEEATONCE"},
+      "expect": {"outcome": "ok", "text": "WDVFTEIELOASRENRCEECEODAE"},
+      "source": "docs/skytale.md section 6"
+    },
+    {
+      "id": "encrypt-short-last-row",
+      "requirements": ["ENC-SKY-002", "ENC-SKY-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 4}, "text": "WEAREDISCOVEREDFLEEATONCE"},
+      "expect": {"outcome": "ok", "text": "WSDOECFNAOLCRVEEEEEDRAIET"},
+      "source": "docs/skytale.md section 6 (short-last-row variant)"
+    },
+    {
+      "id": "decrypt-short-last-row",
+      "requirements": ["ENC-SKY-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 4}, "text": "WSDOECFNAOLCRVEEEEEDRAIET"},
+      "expect": {"outcome": "ok", "text": "WEAREDISCOVEREDFLEEATONCE"}
+    },
+    {
+      "id": "encrypt-hello-two-rows",
+      "requirements": ["ENC-SKY-002", "ENC-SKY-003"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 2}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "HLEOL"},
+      "source": "docs/skytale.md section 6 (short-last-row variant)"
+    },
+    {
+      "id": "decrypt-hello-two-rows",
+      "requirements": ["ENC-SKY-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 2}, "text": "HLEOL"},
+      "expect": {"outcome": "ok", "text": "HELLO"}
+    },
+    {
+      "id": "encrypt-two-columns-equals-rail-fence",
+      "requirements": ["ENC-SKY-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 10}, "text": "HELPMEIAMUNDERATTACK"},
+      "expect": {"outcome": "ok", "text": "HLMIMNEATCEPEAUDRTAK"},
+      "source": "docs/skytale.md section 6"
+    },
+    {
+      "id": "encrypt-empty-last-row",
+      "requirements": ["ENC-SKY-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 6}, "text": "WEAREDISCOVEREDFLEEATONCE"},
+      "expect": {"outcome": "ok", "text": "WDVFTEIELOASRENRCEECEODAE"}
+    },
+    {
+      "id": "decrypt-empty-last-row",
+      "requirements": ["ENC-SKY-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 6}, "text": "WDVFTEIELOASRENRCEECEODAE"},
+      "expect": {"outcome": "ok", "text": "WEAREDISCOVEREDFLEEATONCE"}
+    },
+    {
+      "id": "encrypt-three-rows-ragged",
+      "requirements": ["ENC-SKY-002"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 3}, "text": "ATTACKATDAWN"},
+      "expect": {"outcome": "ok", "text": "ACDTKATAWATN"}
+    },
+    {
+      "id": "decrypt-three-rows-ragged",
+      "requirements": ["ENC-SKY-004"],
+      "operation": "decrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 3}, "text": "ACDTKATAWATN"},
+      "expect": {"outcome": "ok", "text": "ATTACKATDAWN"}
+    },
+    {
+      "id": "rows-1-identity",
+      "requirements": ["ENC-SKY-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 1}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "HELLO"}
+    },
+    {
+      "id": "rows-equal-length-identity",
+      "requirements": ["ENC-SKY-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 5}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "HELLO"}
+    },
+    {
+      "id": "rows-exceed-length-identity",
+      "requirements": ["ENC-SKY-005"],
+      "operation": "decrypt",
+      "input": {"cipher": "skytale", "key": {"rows": 1000}, "text": "HELLO"},
+      "expect": {"outcome": "ok", "text": "HELLO"}
+    },
+    {
+      "id": "reject-rows-0",
+      "requirements": ["ENC-SKY-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "skytale", "key": {"rows": 0}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "reject-rows-negative",
+      "requirements": ["ENC-SKY-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "skytale", "key": {"rows": -4}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    }
+  ]
+}

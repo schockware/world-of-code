@@ -1,0 +1,196 @@
+{
+  "area": "OPER",
+  "spec": "../operator/oper.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' rebuild letters that appear in published traffic or procedure.",
+  "vectors": [
+    {
+      "id": "concatenate-in-order-no-implicit-separator",
+      "requirements": ["ENC-OPER-001"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "attack"}, {"word": "at"}, {"word": "dawn"}]},
+      "expect": {"outcome": "ok", "encoded": "ATTACKATDAWN", "separator": "x"}
+    },
+    {
+      "id": "gap-tokens-place-separators",
+      "requirements": ["ENC-OPER-001", "ENC-OPER-006"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "attack"}, {"gap": 1}, {"word": "at"}, {"gap": 1}, {"word": "dawn"}]},
+      "expect": {"outcome": "ok", "encoded": "ATTACKXATXDAWN", "separator": "x"}
+    },
+    {
+      "id": "leading-and-trailing-gaps",
+      "requirements": ["ENC-OPER-006"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"gap": 1}, {"word": "go"}, {"gap": 1}]},
+      "expect": {"outcome": "ok", "encoded": "XGOX", "separator": "x"}
+    },
+    {
+      "id": "word-uppercased",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "Attack"}]},
+      "expect": {"outcome": "ok", "encoded": "ATTACK", "separator": "x"}
+    },
+    {
+      "id": "name-is-word-by-default",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"name": "Paris"}]},
+      "expect": {"outcome": "ok", "encoded": "PARIS", "separator": "x"}
+    },
+    {
+      "id": "number-digit-by-digit",
+      "requirements": ["ENC-OPER-004"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"number": "0600"}]},
+      "expect": {"outcome": "ok", "encoded": "ZEROSIXZEROZERO", "separator": "x"}
+    },
+    {
+      "id": "result-is-message-ready",
+      "requirements": ["ENC-OPER-010"],
+      "operation": "prepare",
+      "input": {"operator": "classical-spelled", "tokens": [{"word": "arrive"}, {"number": "0600"}, {"punct": "."}]},
+      "expect": {"outcome": "ok", "encoded": "ARRIVEZEROSIXZEROZEROSTOP", "separator": "spelled"}
+    },
+    {
+      "id": "reject-unknown-operator",
+      "requirements": ["ENC-OPER-008"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m4-navy", "tokens": [{"word": "hello"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unknown"}
+    },
+    {
+      "id": "reject-unknown-operator-case",
+      "requirements": ["ENC-OPER-008"],
+      "operation": "prepare",
+      "input": {"operator": "M209-army", "tokens": [{"word": "hello"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unknown"}
+    },
+    {
+      "id": "reject-malformed-tokens-not-list",
+      "requirements": ["ENC-OPER-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": "attack at dawn"},
+      "expect": {"outcome": "rejected", "reason": "operator.malformed"}
+    },
+    {
+      "id": "reject-malformed-two-kinds",
+      "requirements": ["ENC-OPER-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "attack", "gap": 1}]},
+      "expect": {"outcome": "rejected", "reason": "operator.malformed"}
+    },
+    {
+      "id": "reject-malformed-unknown-kind",
+      "requirements": ["ENC-OPER-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"emoji": "x"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.malformed"}
+    },
+    {
+      "id": "reject-malformed-gap-string",
+      "requirements": ["ENC-OPER-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "go"}, {"gap": "1"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.malformed"}
+    },
+    {
+      "id": "reject-malformed-number-integer",
+      "requirements": ["ENC-OPER-002"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"number": 600}]},
+      "expect": {"outcome": "rejected", "reason": "operator.malformed"}
+    },
+    {
+      "id": "reject-word-with-space",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "attack at"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-letters"}
+    },
+    {
+      "id": "reject-word-with-apostrophe",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "don't"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-letters"}
+    },
+    {
+      "id": "reject-word-with-umlaut",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "enigma-m3-army", "tokens": [{"word": "fünf"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-letters"}
+    },
+    {
+      "id": "reject-word-empty",
+      "requirements": ["ENC-OPER-003"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": ""}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-letters"}
+    },
+    {
+      "id": "reject-number-with-point",
+      "requirements": ["ENC-OPER-004"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"number": "3.5"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-digits"}
+    },
+    {
+      "id": "reject-number-signed",
+      "requirements": ["ENC-OPER-004"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"number": "-4"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-digits"}
+    },
+    {
+      "id": "reject-unsupported-punctuation",
+      "requirements": ["ENC-OPER-005"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "wait"}, {"punct": "!"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unsupported-punctuation"}
+    },
+    {
+      "id": "reject-gap-negative",
+      "requirements": ["ENC-OPER-006"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "go"}, {"gap": -1}]},
+      "expect": {"outcome": "rejected", "reason": "operator.gap-out-of-range"}
+    },
+    {
+      "id": "reject-empty-tokens",
+      "requirements": ["ENC-OPER-007"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": []},
+      "expect": {"outcome": "rejected", "reason": "text.empty"}
+    },
+    {
+      "id": "reject-only-zero-gap",
+      "requirements": ["ENC-OPER-007"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"gap": 0}]},
+      "expect": {"outcome": "rejected", "reason": "text.empty"}
+    },
+    {
+      "id": "precedence-operator-first",
+      "requirements": ["ENC-OPER-009"],
+      "operation": "prepare",
+      "input": {"operator": "nope", "tokens": [{"bad": 1}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unknown"}
+    },
+    {
+      "id": "precedence-first-faulty-token",
+      "requirements": ["ENC-OPER-009"],
+      "operation": "prepare",
+      "input": {"operator": "classical-x", "tokens": [{"word": "ok"}, {"number": "x1"}, {"punct": "!"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.not-digits"}
+    },
+    {
+      "id": "precedence-token-over-length",
+      "requirements": ["ENC-OPER-009"],
+      "operation": "prepare",
+      "input": {"operator": "m209-army", "tokens": [{"word": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}, {"punct": "!"}]},
+      "expect": {"outcome": "rejected", "reason": "operator.unsupported-punctuation"}
+    }
+  ]
+}

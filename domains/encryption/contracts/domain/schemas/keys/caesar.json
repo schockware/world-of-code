@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/caesar.json",
+  "title": "Caesar key",
+  "type": "object",
+  "required": ["shift"],
+  "additionalProperties": false,
+  "properties": {
+    "shift": { "type": "integer", "minimum": 0, "maximum": 25, "description": "Places each letter moves forward. 3 is Caesar's own; 0 is the identity." }
+  }
+}

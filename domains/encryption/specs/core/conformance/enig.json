@@ -1,0 +1,311 @@
+{
+  "area": "ENIG",
+  "spec": "../enig.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "published-rotor-details-aaa",
+      "requirements": ["ENC-ENIG-004", "ENC-ENIG-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}, "text": "AAAAA"},
+      "expect": {"outcome": "ok", "text": "BDZGO"},
+      "source": "Wikipedia, Enigma rotor details; docs/enigma.md section 10, V1"
+    },
+    {
+      "id": "published-rotor-details-ring-bbb",
+      "requirements": ["ENC-ENIG-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "BBB", "positions": "AAA", "plugboard": []}, "text": "AAAAA"},
+      "expect": {"outcome": "ok", "text": "EWTYX"},
+      "source": "Wikipedia, Enigma rotor details; docs/enigma.md section 10, V2"
+    },
+    {
+      "id": "published-barbarossa-decrypt",
+      "requirements": ["ENC-ENIG-005", "ENC-ENIG-006", "ENC-ENIG-007"],
+      "operation": "decrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["II", "IV", "V"], "reflector": "B", "rings": "BUL", "positions": "BLA", "plugboard": ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"]}, "text": "EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEYSIOZVEQMIKUBPMMYLKLTTDEISMDICAGYKUACTCDOMOHWXMUUIAUBSTSLRNBZSZWNRFXWFYSSXJZVIJHIDISHPRKLKAYUPADTXQSPINQMATLPIFSVKDASCTACDPBOPVHJK"},
+      "expect": {"outcome": "ok", "text": "AUFKLXABTEILUNGXVONXKURTINOWAXKURTINOWAXNORDWESTLXSEBEZXSEBEZXUAFFLIEGERSTRASZERIQTUNGXDUBROWKIXDUBROWKIXOPOTSCHKAXOPOTSCHKAXUMXEINSAQTDREINULLXUHRANGETRETENXANGRIFFXINFXRGTX"},
+      "source": "Operation Barbarossa message part 1 (1941), published by Geoff Sullivan and Frode Weierud; settings and ciphertext via the Franklin Heath sample-messages page (search excerpt); start position BLA not in the excerpt. See docs/enigma.md section 10, V3"
+    },
+    {
+      "id": "barbarossa-encrypt-reciprocal",
+      "requirements": ["ENC-ENIG-008"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["II", "IV", "V"], "reflector": "B", "rings": "BUL", "positions": "BLA", "plugboard": ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"]}, "text": "AUFKLXABTEILUNGXVONXKURTINOWAXKURTINOWAXNORDWESTLXSEBEZXSEBEZXUAFFLIEGERSTRASZERIQTUNGXDUBROWKIXDUBROWKIXOPOTSCHKAXOPOTSCHKAXUMXEINSAQTDREINULLXUHRANGETRETENXANGRIFFXINFXRGTX"},
+      "expect": {"outcome": "ok", "text": "EDPUDNRGYSZRCXNUYTPOMRMBOFKTBZREZKMLXLVEFGUEYSIOZVEQMIKUBPMMYLKLTTDEISMDICAGYKUACTCDOMOHWXMUUIAUBSTSLRNBZSZWNRFXWFYSSXJZVIJHIDISHPRKLKAYUPADTXQSPINQMATLPIFSVKDASCTACDPBOPVHJK"}
+    },
+    {
+      "id": "long-run-26",
+      "requirements": ["ENC-ENIG-004", "ENC-ENIG-009"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}, "text": "AAAAAAAAAAAAAAAAAAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "BDZGOWCXLTKSBTMCDLPBMUQOFX"}
+    },
+    {
+      "id": "hello-world-aaa",
+      "requirements": ["ENC-ENIG-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "ILBDAAMTAZ"}
+    },
+    {
+      "id": "hello-world-decrypt-same-operation",
+      "requirements": ["ENC-ENIG-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}, "text": "ILBDAAMTAZ"},
+      "expect": {"outcome": "ok", "text": "HELLOWORLD"}
+    },
+    {
+      "id": "double-step",
+      "requirements": ["ENC-ENIG-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "ADU", "plugboard": []}, "text": "AAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "EQIBMGFJBW"}
+    },
+    {
+      "id": "double-step-hello",
+      "requirements": ["ENC-ENIG-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "ADU", "plugboard": []}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "IBXXXNVDFL"}
+    },
+    {
+      "id": "ring-does-not-move-turnover",
+      "requirements": ["ENC-ENIG-004", "ENC-ENIG-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "BCD", "positions": "ADU", "plugboard": []}, "text": "HELLOWORLD"},
+      "expect": {"outcome": "ok", "text": "ZITVAJTJFA"}
+    },
+    {
+      "id": "turnover-rotor-iv-v",
+      "requirements": ["ENC-ENIG-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "IV", "V"], "reflector": "B", "rings": "AAA", "positions": "AIY", "plugboard": []}, "text": "AAAAAA"},
+      "expect": {"outcome": "ok", "text": "SBDJED"}
+    },
+    {
+      "id": "turnover-rotor-iv-v-decrypt",
+      "requirements": ["ENC-ENIG-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "IV", "V"], "reflector": "B", "rings": "AAA", "positions": "AIY", "plugboard": []}, "text": "SBDJED"},
+      "expect": {"outcome": "ok", "text": "AAAAAA"}
+    },
+    {
+      "id": "left-rotor-wraps",
+      "requirements": ["ENC-ENIG-004"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["III", "II", "I"], "reflector": "B", "rings": "AAA", "positions": "ZEQ", "plugboard": []}, "text": "AAAA"},
+      "expect": {"outcome": "ok", "text": "CICG"}
+    },
+    {
+      "id": "plugboard-three-pairs",
+      "requirements": ["ENC-ENIG-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AB", "CD", "EF"]}, "text": "AAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "BJLDSYJIEK"}
+    },
+    {
+      "id": "plugboard-pair-order-irrelevant",
+      "requirements": ["ENC-ENIG-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["BA", "DC", "FE"]}, "text": "AAAAAAAAAA"},
+      "expect": {"outcome": "ok", "text": "BJLDSYJIEK"}
+    },
+    {
+      "id": "reflector-c",
+      "requirements": ["ENC-ENIG-005"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["V", "III", "I"], "reflector": "C", "rings": "QRS", "positions": "XYZ", "plugboard": ["QW", "ER", "TZ"]}, "text": "THEQUICKBROWNFOXJUMPSOVERTHELAZYDOG"},
+      "expect": {"outcome": "ok", "text": "ATMJWROPRGWGSWEYKKZLGXJNGKJKQHNILRV"}
+    },
+    {
+      "id": "accept-empty-plugboard",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "accept-ten-pairs",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["II", "IV", "V"], "reflector": "B", "rings": "BUL", "positions": "BLA", "plugboard": ["AV", "BS", "CG", "DL", "FU", "HZ", "IN", "KM", "OW", "RX"]}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "reject-malformed-missing-plugboard",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-two-rotors",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-rotors-string",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": "I II III", "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-plugboard-string",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": "AB CD"}},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-unknown-rotor-naval",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "VI"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "reject-unknown-rotor-lowercase",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "ii", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "reject-unknown-rotor-arabic",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["1", "2", "3"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "reject-unknown-reflector-a",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "A", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "reject-unknown-reflector-thin",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B-thin", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "reject-repeated-rotor",
+      "requirements": ["ENC-ENIG-001"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "I", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.repeated-rotor"}
+    },
+    {
+      "id": "reject-rings-lowercase",
+      "requirements": ["ENC-ENIG-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "aaa", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-rings-numbers",
+      "requirements": ["ENC-ENIG-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "010101", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-positions-too-short",
+      "requirements": ["ENC-ENIG-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-positions-too-long",
+      "requirements": ["ENC-ENIG-002"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-plugboard-eleven-pairs",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AB", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST", "UV"]}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "reject-plugboard-pair-one-letter",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AB", "C"]}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-plugboard-pair-lowercase",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["ab"]}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "reject-plugboard-self-pair",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AA"]}},
+      "expect": {"outcome": "rejected", "reason": "key.plugboard-conflict"}
+    },
+    {
+      "id": "reject-plugboard-letter-reused",
+      "requirements": ["ENC-ENIG-003"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AB", "BC"]}},
+      "expect": {"outcome": "rejected", "reason": "key.plugboard-conflict"}
+    },
+    {
+      "id": "precedence-rotor-over-reflector",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "VIII"], "reflector": "A", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "precedence-repeated-over-reflector",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["II", "II", "III"], "reflector": "A", "rings": "AAA", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.repeated-rotor"}
+    },
+    {
+      "id": "precedence-reflector-over-rings",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "A", "rings": "aaa", "positions": "AAA", "plugboard": []}},
+      "expect": {"outcome": "rejected", "reason": "key.unknown-component"}
+    },
+    {
+      "id": "precedence-rings-over-plugboard",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "aaa", "positions": "AAA", "plugboard": ["AA"]}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    },
+    {
+      "id": "precedence-count-over-pair-letters",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["ab", "CD", "EF", "GH", "IJ", "KL", "MN", "OP", "QR", "ST", "UV"]}},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "precedence-pair-letters-over-conflict",
+      "requirements": ["ENC-ENIG-010"],
+      "operation": "validateKey",
+      "input": {"cipher": "enigma-m3", "key": {"rotors": ["I", "II", "III"], "reflector": "B", "rings": "AAA", "positions": "AAA", "plugboard": ["AA", "b"]}},
+      "expect": {"outcome": "rejected", "reason": "key.not-letters"}
+    }
+  ]
+}

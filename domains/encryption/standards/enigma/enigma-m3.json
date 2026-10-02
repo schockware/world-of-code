@@ -1,0 +1,17 @@
+{
+  "machine": "enigma-m3",
+  "description": "Army and Air Force Enigma I, called M3 in this project. Each wiring string gives the output contact for input contacts A to Z, toward the reflector, with the rotor at window position A and ring setting A.",
+  "entryWheel": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  "rotors": {
+    "I":   { "wiring": "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "turnover": "Q", "notchOnRing": "Y" },
+    "II":  { "wiring": "AJDKSIRUXBLHWTMCQGZNPYFVOE", "turnover": "E", "notchOnRing": "M" },
+    "III": { "wiring": "BDFHJLCPRTXVZNYEIWGAKMUSQO", "turnover": "V", "notchOnRing": "D" },
+    "IV":  { "wiring": "ESOVPZJAYQUIRHXLNFTGKDCMWB", "turnover": "J", "notchOnRing": "R" },
+    "V":   { "wiring": "VZBRGITYUPSDNHLXAWMJQOFECK", "turnover": "Z", "notchOnRing": "H" }
+  },
+  "reflectors": {
+    "B": "YRUHQSLDPXNGOKMIEBFZCWVJAT",
+    "C": "FVPJIAOYEDRZXWGCTKUQSBNMHL"
+  },
+  "plugboardMaxPairs": 10
+}

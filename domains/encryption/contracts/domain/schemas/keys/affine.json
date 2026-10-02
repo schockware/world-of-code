@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/keys/affine.json",
+  "title": "Affine key",
+  "description": "E(x) = (a*x + b) mod 26. a must have an inverse modulo 26.",
+  "type": "object",
+  "required": ["a", "b"],
+  "additionalProperties": false,
+  "properties": {
+    "a": { "enum": [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25], "description": "Multiplier, coprime with 26." },
+    "b": { "type": "integer", "minimum": 0, "maximum": 25, "description": "Shift." }
+  }
+}

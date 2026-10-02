@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://world-of-code.example/encryption/domain/schemas/message.json",
+  "title": "Message",
+  "description": "A message as written, and as an operator would key it.",
+  "type": "object",
+  "required": [
+    "original",
+    "encoded",
+    "separator"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "original": {
+      "type": "string",
+      "description": "The message as written, before any encoding. Any text. Carried unchanged."
+    },
+    "encoded": {
+      "$ref": "letters.json",
+      "description": "The message as keyed for transmission: A-Z only, with word breaks, punctuation and numbers spelled out or dropped."
+    },
+    "separator": {
+      "enum": [
+        "x",
+        "z",
+        "spelled"
+      ],
+      "description": "How encoded marks word breaks: x (the letter X, classical and Enigma operators), z (the letter Z, M-209 operators), or spelled (no separator letter; breaks and punctuation spelled as words, or omitted). Set by the operator that prepared the message."
+    }
+  }
+}

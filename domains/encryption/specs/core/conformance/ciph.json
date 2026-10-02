@@ -1,0 +1,105 @@
+{
+  "area": "CIPH",
+  "spec": "../ciph.md",
+  "status": "Expected values agree with two independent throwaway implementations (Python and JavaScript). Vectors marked with a 'source' were also published in the research docs.",
+  "vectors": [
+    {
+      "id": "validate-key-ok",
+      "requirements": ["ENC-CIPH-005"],
+      "operation": "validateKey",
+      "input": {"cipher": "caesar", "key": {"shift": 3}},
+      "expect": {"outcome": "ok"}
+    },
+    {
+      "id": "validate-key-matches-encrypt",
+      "requirements": ["ENC-CIPH-005"],
+      "operation": "validateKey",
+      "input": {"cipher": "affine", "key": {"a": 2, "b": 1}},
+      "expect": {"outcome": "rejected", "reason": "key.not-invertible"}
+    },
+    {
+      "id": "reject-unknown-cipher",
+      "requirements": ["ENC-CIPH-006"],
+      "operation": "encrypt",
+      "input": {"cipher": "vigenere", "key": {"keyword": "KEY"}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "cipher.unknown"}
+    },
+    {
+      "id": "reject-unknown-cipher-validate",
+      "requirements": ["ENC-CIPH-006"],
+      "operation": "validateKey",
+      "input": {"cipher": "Caesar", "key": {"shift": 3}},
+      "expect": {"outcome": "rejected", "reason": "cipher.unknown"}
+    },
+    {
+      "id": "reject-malformed-missing-member",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-extra-member",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3, "direction": "left"}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-string-number",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": "3"}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-fraction",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 3.5}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-null-key",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": null, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "reject-malformed-key-not-object",
+      "requirements": ["ENC-CIPH-007"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": 3, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "precedence-cipher-over-key",
+      "requirements": ["ENC-CIPH-008"],
+      "operation": "encrypt",
+      "input": {"cipher": "enigma", "key": {"shift": 99}, "text": "HELLO"},
+      "expect": {"outcome": "rejected", "reason": "cipher.unknown"}
+    },
+    {
+      "id": "precedence-key-over-text",
+      "requirements": ["ENC-CIPH-008"],
+      "operation": "encrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 99}, "text": "hello"},
+      "expect": {"outcome": "rejected", "reason": "key.out-of-range"}
+    },
+    {
+      "id": "precedence-malformed-key-over-empty-text",
+      "requirements": ["ENC-CIPH-008"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {}, "text": ""},
+      "expect": {"outcome": "rejected", "reason": "key.malformed"}
+    },
+    {
+      "id": "wrong-key-decrypts-without-rejection",
+      "requirements": ["ENC-CIPH-011"],
+      "operation": "decrypt",
+      "input": {"cipher": "caesar", "key": {"shift": 4}, "text": "KHOORZRUOG"},
+      "expect": {"outcome": "ok", "text": "GDKKNVNQKC"}
+    }
+  ]
+}
