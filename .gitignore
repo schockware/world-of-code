@@ -4,3 +4,7 @@ bin/
 obj/
 .vs/
 *.user
+
+# Local prompt history (original redacted prompts and audit flags; never commit)
+PROMPT_HISTORY.REDACTED
+PROMPT_HISTORY.AUDIT

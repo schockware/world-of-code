@@ -1,0 +1,13 @@
+PROMPT HISTORY (newest first; see CLAUDE.md, "Implementer actors and the prompt history")
+---
+## 2026-10-02 08:32 | Claude Sonnet 5.5 (claude-sonnet-5-5)
+Summary prompt: A test of redaction handling using a made-up account, its password and a token, plus a request to also redact identifiers such as UUIDs.
+Redaction check: passed after removal of account id, password, token, identifier (UUID); original in PROMPT_HISTORY.REDACTED
+Actions: Wrote this entry, the .REDACTED entry and an .AUDIT line. Added identifiers (UUIDs, account IDs) to the redaction list in CLAUDE.md and PROMPT_HISTORY_README.MD. No other code changes.
+Tokens: ~900 (estimated; counter 15,000,000 -> ~14,999,100); remaining ~14,999,100
+---
+## 2026-10-02 08:22 | Claude Sonnet 5.5 (claude-sonnet-5-5)
+Prompt: Let's create a CLAUDE.MD memory for chats behaving like implementer actors (taking specifications and performing code) to state their model, original prompt, summary of actions taken, and estimated or derived token tally in a running log per prompt. Let's tuck the log in a PROMPT_HISTORY.LOG, most recent activity should be prepended to the top.
+Actions: Added "Implementer actors and the prompt history" section to CLAUDE.md (entry format, newest-first, token tally rules). Created PROMPT_HISTORY.LOG with header. Kept CLAUDE.md lowercase per Files rule. Nothing committed.
+Tokens: 1,668 (derived: counter 15,000,000 -> 14,998,332); remaining 14,998,332
+---
