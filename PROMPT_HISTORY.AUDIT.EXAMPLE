@@ -1,0 +1,3 @@
+PROMPT HISTORY AUDIT EXAMPLE: a committed sample of the gitignored PROMPT_HISTORY.AUDIT (see PROMPT_HISTORY_README.MD)
+---
+2026-10-02 08:32 | Claude Sonnet 5.5 (claude-sonnet-5-5) | account-id, password, token, identifier | Deliberate test with fictional values; confirm summary and CLAUDE.md/README changes leaked none | OPEN

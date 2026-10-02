@@ -11,6 +11,7 @@ How implementer actors (chats that take specifications and write code) record wh
 | `PROMPT_HISTORY.LOG` | yes | Summary prompt, redaction check result, actions, token tally |
 | `PROMPT_HISTORY.REDACTED` | no (gitignored) | The original prompt with sensitive content replaced by `[REDACTED:{category}]` |
 | `PROMPT_HISTORY.AUDIT` | no (gitignored) | One line per entry whose redaction needs supplemental review (categories only, never the content) |
+| `PROMPT_HISTORY.AUDIT.EXAMPLE` | yes | A sample audit line from the faux redaction test, invented values only; actors do not write to it |
 | `PROMPT_HISTORY_README.MD` | yes | This file |
 
 Both logs are newest-first. The two files share an entry heading (`## {date time} | {model}`), so an entry in one can be matched to its entry in the other.
@@ -46,6 +47,7 @@ Prompts whose purpose is to change the logging process itself (the log, redacted
   2. The original lives only in the gitignored `.REDACTED` file, so a missed secret there does not reach the repository either.
 - **Limits:** gitignore stops commits, not copies. The `.REDACTED` file is still readable on disk, in backups, and by tools that ignore `.gitignore`. A summary can still leak if the actor paraphrases a secret. If a secret is found in either file, delete it from the file, rotate the secret, and note the removal in the next entry.
 - **Audit trail:** any entry with a redaction, or where the actor is unsure, gets a line in `PROMPT_HISTORY.AUDIT`, newest first: `{date time} | {model} | {categories} | {why review is needed} | OPEN`. The line matches the entry by its time. A reviewer closes it by prepending `{date time} | REVIEWED {original entry time} | {outcome}`, because older lines are never edited. The audit file is gitignored and so local to one checkout, but a line must still name only the category and reason, never the secret.
+- **Example record:** `PROMPT_HISTORY.AUDIT.EXAMPLE` is committed and holds the `2026-10-02 08:32` faux redaction test line, to show what an audit line looks like when a Claude model writes one. It uses invented values. The real `PROMPT_HISTORY.AUDIT` stays gitignored, so real review flags never reach the repository.
 - Before writing to the `.REDACTED` or `.AUDIT` file, the actor confirms `.gitignore` lists it.
 
 ## Why secrets never belong in a prompt

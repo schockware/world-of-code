@@ -52,6 +52,7 @@ Two files at the repository root:
 
 - `PROMPT_HISTORY.LOG` is committed. It holds the **summary prompt**, never the original text.
 - `PROMPT_HISTORY.REDACTED` is gitignored. It holds the **original prompt, redacted**, under the same entry heading.
+- `PROMPT_HISTORY.AUDIT.EXAMPLE` is committed and holds a sample audit line for reference. Never write real audit lines to it.
 - `PROMPT_HISTORY.AUDIT` is gitignored. It holds one line per entry whose redaction needs supplemental review. It never contains the redacted content, only categories.
 
 Rules:
